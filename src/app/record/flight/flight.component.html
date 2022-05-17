@@ -1,0 +1,266 @@
+<div class="container content">
+  <!--INFO SECTION-->
+  <!--https://www.theguardian.com/environment/ng-interactive/2019/jul/19/carbon-calculator-how-taking-one-flight-emits-as-much-as-many-people-do-in-a-year-->
+  <div class="row">
+    <div class="col-md-12 mx-auto mt-5 mb-5">
+      <app-eco2-flight-chart></app-eco2-flight-chart>
+    </div>
+  </div>
+  <!--RECORD-->
+  <h1>RECORD - FLIGHTS</h1>
+
+  <div class="row" *ngIf="showTotal && !datePickerForm.valid">
+    <div class="col-md-12">
+      <div class="card text-white bg-success mb-3" >
+        <div class="card-header">Your CO2 equivalent statistics has been saved!</div>
+        <div class="card-body">
+          <p class="d-inline-block" style="border: 3px solid white; padding: 10px;">{{newFlights[0].date | date:"fullDate"}}</p>
+
+          <div *ngFor="let item of newFlights">
+            <p class="card-title d-inline-block" style="width: 40vw; font-weight: bold;">{{item.sourceName}} &rarr;{{item.destinationName}}</p>
+            <p class="card-text d-inline-block">{{item.co2eInKg.toFixed(2)}} kilogram CO2e</p>
+          </div>
+
+          <hr>
+
+          <div>
+            <p class="card-title d-inline-block"style="width: 40vw; font-weight: bold;">Total</p>
+            <p class="card-text d-inline-block">{{eco2Total.toFixed(2)}} kilogram CO2e</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <app-loading-spinner *ngIf="isCalculatingEco2"></app-loading-spinner>
+
+  <!--FIRST FORM: DATE PICKER-->
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="datePickerForm">
+        <div class="form-group">
+          <label for="date">Pick a date</label>
+          <input
+            type="date"
+            name="date"
+            id="date"
+            class="form-control"
+            formControlName="dateCtrl"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="accordion">
+    <div class="card">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button
+              class="btn btn-link collapsed"
+              data-toggle="collapse"
+              data-target="#collapseOne"
+              aria-expanded="false"
+              aria-controls="collapseOne"
+              [disabled]="!datePickerForm.valid"
+              (click)="accordionShowed = !accordionShowed"
+            >
+              Your Flight (One Round)
+            </button>
+          </h5>
+        </div>
+        <div
+          id="collapseOne"
+          class="collapse"
+          aria-labelledby="headingOne"
+          data-parent="#accordion"
+          [ngClass]="{ show: accordionShowed && datePickerForm.valid }"
+        >
+          <div class="card-body">
+            <!--SECOND FORM: FLIGHTS FORM-->
+            <div class="row">
+              <div class="col-md-12">
+                <form
+                  [formGroup]="flightForm"
+                  (ngSubmit)="onSubmitFlightForm()"
+                >
+                  <!--Origin IATA-->
+                  <div class="form-group">
+                    <label for="sourceIATA" class="mr-2"
+                      >Origin IATA Location Identifier</label
+                    >
+                    <a
+                      style="cursor: pointer; color: cornflowerblue"
+                      data-toggle="tooltip"
+                      [title]="IATA_DEFINITION"
+                      class="hint-toggle"
+                      >?</a
+                    >
+                    <input
+                      type="text"
+                      name="sourceIATA"
+                      id="sourceIATA"
+                      class="form-control mr-2"
+                      placeholder="Leaving from"
+                      formControlName="sourceIATACtrl"
+                    />
+                    <span
+                      class="help-block text-danger"
+                      *ngIf="
+                        !flightForm.get('sourceIATACtrl').valid &&
+                        flightForm.get('sourceIATACtrl').touched
+                      "
+                      >Please enter a valid IATA (3 unique letters airport
+                      identifier)</span
+                    >
+                    <span
+                      class="text-danger help-block"
+                      *ngIf="nonExistingIATACode1"
+                      style="display:block"
+                      >{{ nonExistingIATACode1 }} does not exist!</span
+                    >
+                  </div>
+
+                  <!--Origin-->
+                  <div
+                    class="form-group"
+                    *ngIf="flightForm.get('sourceIATACtrl').valid"
+                  >
+                    <span class="badge badge-pill badge-warning text-monospace">{{sourceAirportName}}</span>
+                  </div>
+
+                  <!--Destination IATA-->
+                  <div class="form-group">
+                    <label for="destIATA" class="mr-2"
+                      >Destination IATA Location Identifier</label
+                    >
+                    <input
+                      type="text"
+                      name="destIATA"
+                      id="destIATA"
+                      class="form-control"
+                      placeholder="Going to"
+                      formControlName="destIATACtrl"
+                    />
+                    <span
+                      class="help-block text-danger"
+                      *ngIf="
+                        !flightForm.get('destIATACtrl').valid &&
+                        flightForm.get('destIATACtrl').touched
+                      "
+                      >Please enter a valid IATA (3 unique letters airport
+                      identifier)</span
+                    >
+                    <span
+                      class="text-danger help-block"
+                      *ngIf="nonExistingIATACode2"
+                      style="display:block"
+                      >{{ nonExistingIATACode2 }} does not exist!</span
+                    >
+                  </div>
+
+                  <!--Destination-->
+                  <div
+                    class="form-group"
+                    *ngIf="flightForm.get('destIATACtrl').valid"
+                  >
+                    <span class="badge badge-pill badge-warning text-monospace">{{destAirportName}}</span>
+                  </div>
+
+                  <!--Cabin Class-->
+                  <div class="form-group">
+                    <label for="cabin-class" class="mr-2">Cabin Class</label>
+                    <select
+                      name="cabin-class"
+                      id="cabin-class"
+                      class="form-control"
+                      formControlName="cabinClassCtrl"
+                    >
+                      <option value="ECONOMY">Economy</option>
+                      <option value="BUSINESS">Business</option>
+                      <option value="FIRST">First</option>
+                    </select>
+                  </div>
+
+                  <!--Stopovers-->
+                  <div class="form-group" formArrayName="stopoversArray">
+                    <label>Stopovers</label>
+                    <div
+                      *ngFor="
+                        let stopoverCtrl of getStopoverCtrlArray();
+                        let i = index
+                      "
+                    >
+                      <h4>
+                        <span class="badge badge-success"
+                          >Stopover {{ i + 1 }}</span
+                        >
+                        <button
+                          type="button"
+                          class="sign-button"
+                          (click)="onRemoveStopoverCtrl(i)"
+                        >
+                          &minus;
+                        </button>
+                      </h4>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="stopover"
+                          id="stopover"
+                          class="form-control"
+                          placeholder="Stopover airport IATA code"
+                          [formControlName]="[i]"
+                        />
+                        <span
+                          class="help-block text-danger"
+                          *ngIf="!stopoverCtrl.valid && stopoverCtrl.touched"
+                          >Please enter a valid IATA (3 unique letters airport
+                          identifier)</span
+                        >
+                        <span
+                          class="text-danger help-block"
+                          *ngIf="!stopoversAirportName[i] && stopoverCtrl.touched"
+                          style="display:block"
+                          >IATA code does not exist!</span
+                        >
+                      </div>
+                      <div class="form-group" *ngIf="stopoverCtrl.valid">
+                        <span class="badge badge-pill badge-warning text-monospace">{{stopoversAirportName[i]}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="btn btn-success mb-2"
+                    style="display: block"
+                    (click)="onAddStopoverCtrl()"
+                  >
+                    &plus;
+                  </button>
+                  <hr />
+                  <div class="text-right">
+                    <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="!flightForm.valid || nonExistingIATACode1 || nonExistingIATACode2 || !doesStopoverIATAsExist()"
+                  >
+                    {{isCreateMode? "Submit": "Update"}}
+                  </button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

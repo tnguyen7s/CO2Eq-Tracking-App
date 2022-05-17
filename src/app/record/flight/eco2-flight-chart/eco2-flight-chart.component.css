@@ -1,0 +1,18 @@
+.info-box *{
+  font-size:15px!important;
+}
+
+.info-box{
+  padding: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #c9eafe;
+}
+
+.info-box>button{
+  margin: 5px auto;
+}
+
+section>p{
+  margin-bottom: 0.5rem;
+}

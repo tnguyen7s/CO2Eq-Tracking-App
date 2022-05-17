@@ -1,0 +1,39 @@
+<div id="flight-chart-container"></div>
+
+<div class="info-box">
+  <button (click)="showInfoBox=!showInfoBox" class="btn btn-info d-inline-block">{{!showInfoBox? '&darr;  More info about the chart' : '&uarr; Close the box'}}</button>
+
+  <form class="d-inline-block float-right" [formGroup]="flightForm">
+    <div class="form-group form-inline">
+      <label for="flight" class="mr-2">Flight</label>
+      <select name="flight" id="flight" class="form-control" formControlName="flight">
+        <option value="Chicago–New York City">Chicago &rarr; New York City <strong>*349 kgCO2eq</strong></option>
+        <option value="New York City–Los Angeles">New York City &rarr; Los Angeles <strong>*1191 kgCO2eq</strong></option>
+        <option value="Los Angeles–France">Los Angeles &rarr; France <strong>*2722 kgCO2eq</strong></option>
+        <option value="Los Angeles–Vietnam">Los Angeles &rarr; Vietnam <strong>*4464 kgCO2eq</strong></option>
+        <option value="none">None comparison</option>
+      </select>
+    </div>
+  </form>
+
+  <section *ngIf="showInfoBox">
+    <p>
+      The figure highlights those countries whose carbon emissions per capita in a year (those highlighed in <b style="color: #EC9706">orange</b>) are less than that of a person taking one flight between the two specified cities.
+    </p>
+    <p>
+      In addition, the <strong>darker</strong> the country is, the <strong>more</strong> the amount of carbon footprint per capita is. You can hover your mouse over the country to see the country name and their CO2eq per capita.
+    </p>
+    <p>
+      Sources and credits:
+    </p>
+    <ul>
+      <li>
+        Emissions data for flight connections was sourced from <a href="https://www.atmosfair.de/de/" target="_blank"><strong>atmosfair.de</strong></a> and takes into account factors such as the fuel efficiency of different plane models and the average passenger load factor in different regions of the world.
+      </li>
+      <li>
+        Per capita CO₂ emissions in different countries around the world, 2020 was taken from <a href="https://ourworldindata.org/grapher/co-emissions-per-capita" target="_blank"><strong>Our World in Data</strong></a> based on the <strong>Global Carbon Project</strong>.
+      </li>
+    </ul>
+  </section>
+</div>
+

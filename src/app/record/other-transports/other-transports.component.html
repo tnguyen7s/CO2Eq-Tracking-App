@@ -1,0 +1,109 @@
+<div class="container content">
+  <!--RECORD-->
+  <h1>RECORD - OTHER TRANSPORTS</h1>
+
+  <!--FIRST FORM: DATE PICKER-->
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="dateForm">
+        <div class="form-group">
+          <label for="date">Pick a date</label>
+          <input
+            type="date"
+            name="date"
+            id="date"
+            class="form-control"
+            formControlName="dateCtrl"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-loading-spinner *ngIf="isCalculatingEco2"></app-loading-spinner>
+  <!--SUCCESS ALERT - AFTER SAVING-->
+
+  <div class="row" *ngIf="completeSavingForm">
+    <div class="col-md-12">
+      <div class="card text-white bg-success mb-3" >
+        <div class="card-header">Your CO2 equivalent statistics has been saved!</div>
+        <div class="card-body">
+          <p class="d-inline-block" style="border: 3px solid white; padding: 10px;">{{trip.date| date:"fullDate"}}</p>
+          <div>
+            <p class="card-title d-inline-block" style="width: 20vw; font-weight: bold;">Travel distance:</p>
+            <p class="card-text d-inline-block">{{trip.distance}} {{trip.distUnit}}</p>
+          </div>
+
+          <div>
+            <p class="card-title d-inline-block" style="width: 20vw; font-weight: bold;">Fuel efficiency:</p>
+            <p class="card-text d-inline-block">{{trip.fuelEfficiency}} {{trip.fuelEfUnit}}</p>
+          </div>
+
+          <div>
+            <p class="card-title d-inline-block" style="width: 20vw; font-weight: bold;">Fuel type:</p>
+            <p class="card-text d-inline-block">{{trip.fuelType}}</p>
+          </div>
+
+          <hr>
+
+          <div>
+            <p class="card-title d-inline-block"style="width: 20vw; font-weight: bold;">CO2 equivalent:</p>
+            <p class="card-text d-inline-block">{{trip.eCo2InKg}} kilogram</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--SECOND FORM: TRANSPORTS FORM-->
+  <form [formGroup]="transportForm" (ngSubmit)="onSubmitTransportsForm()" *ngIf="dateForm.valid && !isCalculatingEco2">
+    <h4><span class="badge badge-success">Your travel today</span></h4>
+    <!--Distance-->
+    <div class="form-group">
+      <label for="distance">Distance</label>
+      <span class="badge badge-pill badge-warning ml-2">{{transportForm.get("distanceCtrl").value}} {{transportForm.get("distUnitCtrl").value}}</span>
+      <input id="distance" name="distance" class="form-control" type="range" min="0" max="1000" step="1" formControlName="distanceCtrl"/>
+    </div>
+
+    <!--Distance unit-->
+    <div class="form-group">
+      <label for="distance-unit">Units</label>
+      <select name="distance-unit" id="distance-unit" class="form-control" formControlName="distUnitCtrl">
+        <option value="km">km</option>
+        <option value="miles">miles</option>
+      </select>
+    </div>
+
+    <h4><span class="badge badge-success">Fuel efficiency</span></h4>
+    <!--Fuel efficiency value-->
+    <div class="form-group">
+      <label for="efficiency-value" min="0" max="200" step="1">Value</label>
+      <span class="badge badge-pill badge-danger ml-2">{{transportForm.get("fuelEfficiencyCtrl").value}} {{transportForm.get("fuelEffUnitCtrl").value}}</span>
+      <input type="range" name="efficiency-value" id="efficiency-value" class="form-control" formControlName="fuelEfficiencyCtrl">
+    </div>
+
+    <!--Fuel efficiency unit-->
+    <div class="form-group">
+      <label for="fuel-eff-unit">Units</label>
+      <select name="fuel-eff-unit" id="fuel-eff-unit" class="form-control" formControlName="fuelEffUnitCtrl">
+        <option value="mpg">mpg</option>
+        <option value="km/l">km/l</option>
+        <option value="1/100km">1/100km</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="fuel-type">Fuel type</label>
+      <select name="fuel-type" id="fuel-type" class="form-control" formControlName="fuelTypeCtrl">
+        <option value="gasoline">gasoline</option>
+        <option value="diesel">diesel</option>
+      </select>
+    </div>
+
+    <div class="text-right mt-4">
+      <button type="submit" class="btn btn-primary">{{button}}</button>
+    </div>
+  </form>
+
+</div>

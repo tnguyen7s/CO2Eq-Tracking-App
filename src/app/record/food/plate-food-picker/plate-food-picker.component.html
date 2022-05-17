@@ -1,0 +1,59 @@
+<div class="row boundary">
+  <div class="col-md-12 mt-2 mb-3" style="text-align: center;">
+    <h5>Please drag and drop the food that you are eating today into the plate!</h5>
+  </div>
+  <div class="col-md-4">
+    <div class="col-md-12">
+      <!--Filter by food type-->
+      <form>
+        <div class="form-group col-md-11 mx-auto">
+          <select name="food-type" id="food-type" class="form-control" [(ngModel)]="foodType">
+            <option value="Starchy foods">Starchy foods</option>
+            <option value="Non-dairy proteins">Non-dairy proteins</option>
+            <option value="Dairy">Dairy</option>
+            <option value="Fruit and vegetables">Fruit and vegetables</option>
+            <option value="Drink">Drink</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-12"cdkDropList [id]="unselectedDropListId" [cdkDropListConnectedTo]="[selectedDropListId]" (cdkDropListDropped)="onMoveOutOfPlate($event)">
+      <!--FOOD PRODUCTS-->
+      <div *ngFor="let foodItem of getFoodListBySelectedType()|sort:'eco2PerServing'" class="row" [id]="foodItem" cdkDrag [cdkDragData]="foodItem" cdkDragBoundary=".boundary">
+        <div class="col-md-10 mx-auto">
+          <div class="card" [ngClass]="getFoodTypeAbbre(foodItem)">
+            <div class="card-body"><i class="fa" [ngClass]="foodItem.foodImgTag"></i>{{foodItem.foodName}} - {{foodItem.eco2PerServing|convert:"kgram":"gram"}} gram eCO2/serving</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--PLATE-->
+  <div class="col-md-8 mx-auto">
+    <div class="plate">
+      <span class="inner_plate" cdkDropList [id]="selectedDropListId" [cdkDropListConnectedTo]="[unselectedDropListId]" (cdkDropListDropped)="onDropToPlate($event)">
+        <!--FOOD PRODUCTS IN PLATE-->
+        <div *ngFor="let foodItem of (foodSelected | sort: 'eco2PerServing'); let i=index;" class="row" [id]="foodItem" cdkDrag [cdkDragData]="i">
+          <div class="col-md-10 mx-auto">
+            <div class="card on-plate" [ngClass]="getFoodTypeAbbre(foodItem)">
+              <div class="card-body"><i class="fa" [ngClass]="foodItem.foodImgTag"></i>{{foodItem.foodName}} - {{foodItem.eco2PerServing|convert:"kgram":"gram"}} gram eCO2/serving</div>
+            </div>
+          </div>
+        </div>
+      </span>
+    </div>
+
+    <div class="mx-auto weight-scale-display" >
+      <i class="fa fa-weight-scale"></i>
+      <span class="badge badge-info mt-3" style="font-size: large;">{{eco2Total | convert: "kgram": "gram"}} gram</span>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+

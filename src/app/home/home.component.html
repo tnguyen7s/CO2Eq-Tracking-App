@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>ELECTRICITY</h1>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of electricityData">
+        <p>Date: {{item.date}}</p>
+        <p>Value: {{item.value}}</p>
+        <p>Units: {{item.units}}</p>
+        <p>eCO2: {{item.co2eInKg}} kg</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h1>FUELS</h1>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of fuelData">
+        <p>Date: {{item.date}}</p>
+        <p>Type: {{item.type}}</p>
+        <p>Value: {{item.value}}</p>
+        <p>Units: {{item.units}}</p>
+        <p>eCO2: {{item.co2eInKg}} kg</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h1>FLIGHTS</h1>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of flightData">
+        <p>Date: {{item.date}}</p>
+        <p>Source IATA: {{item.sourceIATA}}</p>
+        <p>Destination IATA: {{item.destinationIATA}}</p>
+        <p>Cabin class: {{item.cabinClass}}</p>
+        <p>Source Name: {{item.sourceName}}</p>
+        <p>Destination Name: {{item.destinationName}}</p>
+        <p>eCO2: {{item.co2eInKg}} kg</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h1>FOOD</h1>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of foodData">
+        <p>Date: {{item.date}}</p>
+        <p>Meal: {{item.meal}}</p>
+        <p>Food products: {{item.foodProducts}}</p>
+        <p>Equivalent co2: {{item.totalEco2InKg}} kilogram</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h1>Other Transports</h1>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of transportData">
+        <p>Date: {{item.date}}</p>
+        <p>Distance: {{item.distance}} {{item.distUnit}}</p>
+        <p>Fuel efficiency: {{item.fuelEfficiency}} {{item.fuelEfUnit}}</p>
+        <p>Fuel type: {{item.fuelType}}</p>
+        <p>Equivalent co2: {{item.eCo2InKg}}kilogram</p>
+      </li>
+    </ul>
+  </div>
+</div>
+

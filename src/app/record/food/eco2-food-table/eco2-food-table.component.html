@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-10 mx-auto mt-3 mb-3">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Food</th>
+          <th scope="col">
+            <div>Greenhouse gas emissions per 100g protein</div>
+            <div>(kgCO₂eq per 100g protein)</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-hover">
+        <tr *ngFor="let food of get39FoodItems(); let i=index;" class="table-light">
+          <th scope="row">{{i+1}}</th>
+          <td>{{food}}</td>
+          <td>{{ECO2_FOOD_TABLE[food]}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

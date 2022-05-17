@@ -1,0 +1,254 @@
+/*FOOD CARDS*/
+.dairy {
+  --bg-color: #ffd861;
+  --bg-color-light: #ffeeba;
+  --text-color-hover: #4C5656;
+  --box-shadow-color: rgba(255, 215, 97, 0.48);
+}
+
+.vegetables {
+  --bg-color: #B8F9D3;
+  --bg-color-light: #e2fced;
+  --text-color-hover: #4C5656;
+  --box-shadow-color: rgba(184, 249, 211, 0.48);
+}
+
+.starchy {
+  --bg-color: #CEB2FC;
+  --bg-color-light: #F0E7FF;
+  --text-color-hover: #fff;
+  --box-shadow-color: rgba(206, 178, 252, 0.48);
+}
+
+.drink {
+  --bg-color: #DCE9FF;
+  --bg-color-light: #f1f7ff;
+  --text-color-hover: #4C5656;
+  --box-shadow-color: rgba(220, 233, 255, 0.48);
+}
+
+.protein {
+  --bg-color: #FFA1A1;
+  --bg-color-light: #e2fced;
+  --text-color-hover: #4C5656;
+  --box-shadow-color: #ffe1e1;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0,0,0,0.11),
+    0 24px 46px var(--box-shadow-color);
+}
+
+.card:hover .overlay {
+  transform: scale(4) translateZ(0);
+}
+
+.card:hover {
+  border-color: var(--bg-color-light);
+  background: var(--bg-color);
+}
+
+.card.on-plate{
+  background: var(--bg-color);
+}
+
+.card:hover p {
+  color: var(--text-color-hover);
+}
+
+.card:active {
+  transform: scale(1) translateZ(0);
+  box-shadow: 0 15px 24px rgba(0,0,0,0.11),
+    0 15px 24px var(--box-shadow-color);
+}
+
+
+/*PLATE
+Source: https://dev.to/dhintz89/css-plate-for-your-recipe-app-29p7
+*/
+.plate {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 45vw;
+  background-color: white;
+  border-radius: 50%;
+  justify-content: center;
+  font-size: 15px;
+  box-shadow: 2px 2px 8px 2px #000;
+  padding: 30px;
+  margin: 20px;
+}
+
+.inner_plate {
+  align-self: center;
+  border-radius: 50%;
+  height: 100vh;
+  width: 40vw;
+  border: #dddddd solid 2px;
+  background-color: white;
+  font-size: 1rem;
+  box-shadow: 0 0 10px 10px #cfcfcf;
+  justify-content: center;
+  padding: 25px;
+  text-align: center;
+}
+
+
+.inner_plate h3 {
+    max-width: 250px;
+    padding: 0 15px;
+}
+
+
+/*ICONS*/
+
+.fa-apple
+{
+  content: url("https://img.icons8.com/color/48/ffffff/apple.png");
+}
+
+.fa-avocado{
+  content: url("https://img.icons8.com/emoji/48/ffffff/avocado-emoji.png");
+}
+
+.fa-banana{
+  content: url("https://img.icons8.com/color/48/ffffff/banana.png");
+}
+
+.fa-bean{
+  content: url("https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/60/ffffff/external-bean-vegetable-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png");
+}
+
+.fa-beef{
+  content: url("https://img.icons8.com/emoji/48/ffffff/cut-of-meat-emoji.png");
+}
+
+.fa-beer{
+  content: url("https://img.icons8.com/color/48/ffffff/beer.png");
+}
+
+.fa-grape{
+  content: url("https://img.icons8.com/external-dreamcreateicons-outline-color-dreamcreateicons/64/ffffff/external-grape-autumn-season-dreamcreateicons-outline-color-dreamcreateicons.png")
+}
+
+.fa-berry{
+  content: url("https://img.icons8.com/external-filled-outlines-amoghdesign/32/ffffff/external-berry-fruits-and-vegetables-filled-outlines-amoghdesign.png")
+}
+
+.fa-bread{
+  content: url("https://img.icons8.com/emoji/48/ffffff/bread-emoji.png")
+}
+
+.fa-cheese{
+  content: url("https://img.icons8.com/emoji/48/ffffff/cheese-wedge-emoji.png")
+}
+
+.fa-chicken{
+  content: url("https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/ffffff/external-chicken-politics-flaticons-lineal-color-flat-icons.png");
+}
+
+.fa-chocolate{
+  content: url("https://img.icons8.com/office/40/ffffff/chocolate-bar.png");
+}
+
+.fa-cirtrus
+{
+  content: url("https://img.icons8.com/doodle/48/ffffff/citrus.png");
+}
+
+.fa-coffee{
+  content: url("https://img.icons8.com/office/40/ffffff/iced-coffee.png");
+}
+
+.fa-fish{
+  content: url("https://img.icons8.com/emoji/48/ffffff/fish-emoji.png")
+}
+
+.fa-lamb{
+  content: url("https://img.icons8.com/color/48/ffffff/rack-of-lamb.png")
+}
+
+.fa-egg{
+  content: url("https://img.icons8.com/emoji/48/ffffff/egg-emoji.png");
+}
+
+.fa-almond{
+  content: url("https://img.icons8.com/external-others-pike-picture/50/ffffff/external-Almond-nut-others-pike-picture.png")
+}
+
+.fa-cow{
+  content: url("https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/ffffff/external-milk-vegan-and-vegetarian-flaticons-lineal-color-flat-icons.png");
+}
+
+.fa-rice{
+  content: url("https://img.icons8.com/color-glass/48/ffffff/grains-of-rice.png")
+}
+
+.fa-oat{
+  content: url("https://img.icons8.com/dusk/64/ffffff/oat-milk.png")
+}
+
+.fa-soy{
+  content: url("https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/ffffff/external-soy-milk-vegan-and-vegetarian-flaticons-lineal-color-flat-icons.png")
+}
+.fa-nut{
+  content: url("https://img.icons8.com/emoji/48/ffffff/peanuts-emoji.png")
+}
+
+.fa-oatmeal{
+  content: url("https://img.icons8.com/external-others-pike-picture/50/ffffff/external-Oatmeal-Bath-dry-skin-others-pike-picture.png")
+}
+
+.fa-pasta{
+  content: url("https://img.icons8.com/external-flaticons-flat-flat-icons/64/ffffff/external-pasta-world-cuisine-flaticons-flat-flat-icons.png")
+}
+
+.fa-pea{
+  content: url("https://img.icons8.com/color/48/ffffff/peas.png");
+}
+
+.fa-pork{
+  content: url("https://img.icons8.com/office/40/ffffff/bacon.png");
+}
+
+.fa-potato{
+  content: url("https://img.icons8.com/officel/40/ffffff/potato.png")
+}
+
+.fa-prawned{
+  content: url("https://img.icons8.com/color/48/ffffff/prawn.png");
+}
+
+.fa-tea{
+  content: url("https://img.icons8.com/external-febrian-hidayat-outline-color-febrian-hidayat/64/ffffff/external-tea-restaurant-febrian-hidayat-outline-color-febrian-hidayat.png")
+}
+
+.fa-tofu{
+  content: url("https://img.icons8.com/external-justicon-flat-justicon/64/ffffff/external-tofu-healthy-food-and-vegan-justicon-flat-justicon-1.png")
+}
+
+
+.fa-tomato{
+  content: url("https://img.icons8.com/external-flat-land-kalash/64/ffffff/external-food-food-flat-land-kalash-15.png")
+}
+
+.fa-wine{
+  content: url("https://img.icons8.com/color/48/ffffff/wine-and-glass.png")
+}
+
+.fa-weight-scale{
+  content: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU9Xiv3bSsajDuvq0LnvH3FYJ73fj3m3vACsNrFVwcNz_lxe0nrvU7DjPjEX8i0IEPWzY&usqp=CAU");
+}
+
+
+/*weight scale*/
+.weight-scale-display{
+  justify-content: center;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20px;
+}

@@ -1,0 +1,110 @@
+<div class="pl-5 mt-5 pr-5">
+  <div id="jquery-accordion-menu" class="jquery-accordion-menu">
+    <div class="jquery-accordion-menu-header">CO2 TRACKER </div>
+    <ul>
+      <!--ACCOUNT-->
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/account">
+        <div class="pictitle avatar">
+          <i class="fa fa-account"></i>
+        Account
+        </div>
+      </a></li>
+
+      <!--HOME-->
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/home">
+        <div class="pictitle">
+          <i class="fa fa-home"></i>
+          Home
+        </div>
+      </a></li>
+
+      <!--RECORD EMISSION-->
+      <!--class="submenu-indicator-minus"-->
+      <li routerLinkActive="active"><a style="cursor: pointer;" [ngClass]="{'submenu-indicator-minus': isExpanding}" (click)="onExpandRecordEmissionMenu()" routerLink="/record">
+        <span class="ink animate-ink" style="height: 260px; width: 260px;"></span>
+        <div class="pictitle">
+          <i class="fa fa-record"></i>
+          Record Emission
+          <span class="submenu-indicator" style="font-size: 24px;">{{isExpanding? "&times;":"&plus;"}}</span>
+        </div>
+        </a>
+        <ul class="submenu">
+          <li ><a style="cursor: pointer;" [routerLink]="['/record', 'flight']" routerLinkActive="active">
+            <div class="pictitle">
+              <i class="fa fa-flight"></i>
+              Flight
+            </div>
+          </a></li>
+          <li><a style="cursor: pointer;" [routerLink]="['/record', 'other-transports']" routerLinkActive="active">
+            <div class="pictitle">
+              <i class="fa fa-car"></i>
+              Other transport
+            </div>
+          </a></li>
+          <li><a style="cursor: pointer;" [routerLink]="['/record', 'electricity']" routerLinkActive="active">
+            <div class="pictitle">
+              <i class="fa fa-electricity"></i>
+              Electricity & Fuel
+            </div>
+          </a></li>
+          <li><a style="cursor: pointer;" [routerLink]="['/record', 'food']" routerLinkActive="active">
+            <div class="pictitle">
+              <i class="fa fa-food"></i>
+              Food
+            </div>
+          </a></li>
+          <li><a style="cursor: pointer;" [routerLink]="['/record', 'products']" routerLinkActive="active">
+            <div class="pictitle">
+              <i class="fa fa-products"></i>
+              Products
+            </div>
+          </a></li>
+        </ul>
+      </li>
+
+      <!--
+        <li><a style="cursor: pointer;" href="#"><i class="fa fa-file-image-o"></i>Gallery </a><span class="jquery-accordion-menu-label">12 </span></li>
+      -->
+      <!--PRACTICE-->
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/practice">
+        <div class="pictitle">
+          <i class="fa fa-practice"></i>
+          Practice
+        </div>
+      </a></li>
+
+      <!--LEARN-->
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/learn">
+        <div class="pictitle">
+          <i class="fa fa-learn"></i>
+          Learn
+        </div>
+      </a></li>
+
+      <!--STATISTICS-->
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/statistics">
+        <div class="pictitle">
+          <i class="fa fa-statistics"></i>
+          Statistics
+        </div>
+      </a></li>
+
+      <!--COMMUNITY-->
+      <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/community">
+        <div class="pictitle">
+          <i class="fa fa-community"></i>
+          Community
+        </div>
+      </a></li>
+
+      <!--LOGOUT-->
+      <li><a style="cursor: pointer;" (click)="onLogout()">
+        <div class="pictitle">
+          <i class="fa fa-logout"></i>
+          Logout
+        </div>
+      </a></li>
+
+    </ul>
+    <div class="jquery-accordion-menu-footer"></div>
+  </div>

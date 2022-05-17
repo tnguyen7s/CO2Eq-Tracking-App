@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+.content{
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+*{
+  font-family:'Open Sans',sans-serif;
+  font-size: 18px;
+}
+
+h1{
+  padding-bottom: 30px;
+}
+
+.card>.card-header>h5>button{
+  color: #049372;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+label{
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.fa-arrow{
+  content: url("https://img.icons8.com/ios-glyphs/30/ffffff/arrow.png");
+}
+
+input.ng-invalid.ng-touched{
+  border: solid red 1px;
+}
+
+h4{
+  padding-bottom: 20px;
+}
+
+.badge{
+  margin-right: 10px;
+}
+
+.sign-button{
+  border: none;
+  padding: 5px;
+  background-color: white;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.bold-value{
+  font-weight: 900;
+}
+
+.hint-toggle{
+  color:red;
+}
+
+.gray-background-highlight{
+  background-color: #f7f7f9;
+}
+
+.white-background-highlight{
+  background-color: white;
+}
+
+

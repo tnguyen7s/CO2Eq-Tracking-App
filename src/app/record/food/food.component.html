@@ -1,0 +1,140 @@
+<div class="container content">
+  <h1>FOOD PRODUCTS</h1>
+  <!-- INFO SECTION -->
+  <div class="row gray-background-highlight">
+    <!--SELECT TABS-->
+    <div class="col-md-11 white-background-highlight mx-auto mt-3 p-3" style="border-radius: 10px;">
+        <ul class="nav nav-pills">
+
+          <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer;" [ngClass]="{'active': factsActive}" (click)="onActivateFacts()">Fact</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer;" [ngClass]="{'active': chartActive}" (click)="onActivateChart()">Chart</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer;"[ngClass]="{'active': tableActive}" (click)="onActivateTable()">Table</a>
+          </li>
+
+        </ul>
+
+    </div>
+
+    <!--FACT / TABLE / CHART-->
+    <div class="col-md-12">
+      <app-eco2-food-facts *ngIf="factsActive"></app-eco2-food-facts>
+      <app-eco2-food-chart *ngIf="chartActive"></app-eco2-food-chart>
+      <app-eco2-food-table *ngIf="tableActive"></app-eco2-food-table>
+    </div>
+
+  </div>
+
+  <!-- RECORD FOOD -->
+  <h2 class="mt-4 mb-4">Record</h2>
+
+  <!--eco2 Info Box-->
+  <div class="row" *ngIf="!dateForm.valid && showEc02ResultBox">
+    <div class="col-md-12">
+      <div class="card text-white bg-success mb-3" >
+        <div class="card-header">Your CO2 equivalent statistics has been saved!</div>
+        <div class="card-body">
+          <p class="d-inline-block" style="border: 3px solid white; padding: 10px;">{{dateSelected| date:"fullDate"}}</p>
+          <div>
+            <p class="card-title d-inline-block" style="width: 40vw; font-weight: bold;">Breakfast</p>
+            <p class="card-text d-inline-block">{{totalBreakfast | convert:"kgram":"gram"}} gram CO2 equivalent</p>
+          </div>
+
+          <div>
+            <p class="card-title d-inline-block" style="width: 40vw; font-weight: bold;">Lunch</p>
+            <p class="card-text d-inline-block">{{totalLunch | convert:"kgram":"gram"}} gram CO2 equivalent</p>
+          </div>
+
+          <div>
+            <p class="card-title d-inline-block"style="width: 40vw; font-weight: bold;">Dinner</p>
+            <p class="card-text d-inline-block">{{totalDinner | convert:"kgram":"gram"}} gram CO2 equivalent</p>
+          </div>
+
+          <hr>
+
+          <div>
+            <p class="card-title d-inline-block"style="width: 40vw; font-weight: bold;;">Total</p>
+            <p class="card-text d-inline-block">{{(totalBreakfast + totalLunch + totalDinner).toFixed(2)}} kilogram CO2 equivalent</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Date picker-->
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="dateForm">
+        <div class="form-group">
+          <label for="date-picker">Pick a date</label>
+          <input type="date" name="date-picker" id="date-picker" class="form-control" formControlName="date">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!--FOOD FORM-->
+  <form (ngSubmit)="onSubmitFoodForm()">
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button type="button" [disabled]="!dateForm.valid" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" (click)="onToggleBreakfastCard()">
+              Breakfast
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion" [ngClass]="{'show': showBreakfast&&dateForm.valid}">
+          <div class="card-body">
+            <app-plate-food-picker meal="breakfast" [foodSelected]="breakfastFoodList"></app-plate-food-picker>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button type="button" [disabled]="!dateForm.valid" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" (click)="onToggleLunchCard()">
+            Lunch
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion" [ngClass]="{'show': showLunch&&dateForm.valid}" >
+          <div class="card-body">
+            <!--LUNCH FORM-->
+            <app-plate-food-picker meal="lunch" [foodSelected]="lunchFoodList"></app-plate-food-picker>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button type="button" [disabled]="!dateForm.valid" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" (click)="onToggleDinnerCard()">
+            Dinner
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion" [ngClass]="{'show': showDinner&&dateForm.valid}" >
+          <div class="card-body">
+            <!--DINNER FORM-->
+            <app-plate-food-picker meal="dinner" [foodSelected]="dinnerFoodList"></app-plate-food-picker>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+      <!--SUBMIT BUTTON-->
+      <div class="text-right mt-2">
+        <button class="btn btn-primary mt-2" type="submit" [disabled]="!dateForm.valid">Submit</button>
+      </div>
+  </form>
+</div>

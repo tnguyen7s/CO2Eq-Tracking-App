@@ -1,0 +1,27 @@
+input[type="range"]::-moz-range-track {
+  background-color: #053a5f;
+  border-radius: 0.5rem;
+  height: 0.25rem;
+}
+
+input[type="range"]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: transparent;
+
+  width: 2rem;
+  height: 2rem;
+}
+
+input#distance[type="range"]::-moz-range-thumb
+{
+  background-image: url("../../../images/vehicle.png");
+}
+
+input#efficiency-value[type="range"]::-moz-range-thumb{
+  background-image: url("../../../images/gas.png");
+}

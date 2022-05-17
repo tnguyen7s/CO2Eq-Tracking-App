@@ -1,0 +1,163 @@
+<div class="container content">
+  <div class="row">
+
+    <div class="col-md-12">
+      <h1>RECORD - ELECTRICITY & FUELS</h1>
+    </div>
+
+    <div class="col-md-4">
+      <form [formGroup]="datePickerForm">
+      <div class="form-group form-inline ">
+        <label for="date-picker" class="control-label mr-sm-2">Pick a date</label>
+        <input type="date"  class="form-control mr-sm-2" id="date-picker" name="date-picker" formControlName="datePickerCtrl">
+      </div>
+    </form>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button [disabled]="!datePickerForm.valid" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" (click)="electricityShowed=!electricityShowed">
+                Electricity
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion" [ngClass]="{'show': electricityShowed}">
+            <div class="card-body">
+              <!--ELECTRICITY FORM-->
+              <form [formGroup]="electricityForm" (ngSubmit)="onSubmitElectricityForm()" *ngIf="!completeElectricityForm">
+                <div class="form-group form-inline">
+                  <label for="date" class="mr-sm-2">Date</label>
+                  <input type="date" name="date" id="date" class="form-control" disabled="true" [value]="dateSelected" formControlName="dateCtrl">
+                </div>
+
+                <div class="form-group form-inline">
+                  <label for="value" class="mr-sm-2">Value</label>
+                  <input type="number" id="value" name="value" class="form-control mr-sm-2" min="0" formControlName="valueCtrl">
+                  <span class="help-block text-danger "
+                        *ngIf="!electricityForm.get('valueCtrl').valid && electricityForm.get('valueCtrl').touched">
+                        Please enter a valid value!
+                  </span>
+                </div>
+
+                <div class="form-group form-inline">
+                  <label for="unit" class="mr-sm-2">Unit</label>
+                  <select name="unit" id="unit" class="form-control" formControlName="unitCtrl">
+                    <option value="Wh">Wh</option>
+                    <option value="kWh">kWh</option>
+                    <option value="mWh">mWh</option>
+                  </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="!electricityForm.valid">{{eSubmitButton}}</button>
+              </form>
+
+              <!--LOADING SPINNER - FOR ELECTRICITY CALCULATION-->
+              <app-loading-spinner *ngIf="isCalculatingE"></app-loading-spinner>
+
+              <!--SUCCESS ALERT - AFTER SAVING-->
+              <div *ngIf="completeElectricityForm">
+                <div class="alert alert-success" role="alert">
+                  <p>You data has been saved !<p>
+                  <p>Estimated equivalent CO2 for electricity submitted for the date {{eDisplayed.date | date: "longDate"}} is <span class="bold-value">{{eDisplayed.co2eInKg}} kilogram</span></p>
+                </div>
+
+                <span *ngIf="eWantToUpdate" class="help-block mr-sm-2">Do you want to update?</span>
+                <button *ngIf="eWantToUpdate" type="button" class="btn btn-warning mr-sm-2"  (click)="onRefactorEFormWithGivenDate()">Yes</button>
+                <button *ngIf="eWantToUpdate" type="button" class="btn btn-danger mr-sm-2" (click)="eWantToUpdate=!eWantToUpdate">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button [disabled]="!datePickerForm.valid" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" (click)="fuelsShowed = !fuelsShowed">
+              Fuels
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion" [ngClass]="{'show': fuelsShowed}" >
+            <div class="card-body">
+              <!--FUELS FORM-->
+              <form [formGroup]="fuelsForm" (ngSubmit)="onSubmitFuelsForm()" *ngIf="!completeFuelForm" >
+                <div formArrayName="fuelsArray">
+                <div *ngFor="let oneFuel of getFuelGroups().controls; let i=index" [formGroupName]="i">
+                  <h4><span class="badge badge-success">Fuel {{i+1}}</span> <button type="button" class="sign-button" (click)="onRemoveFuelGroup(i)">&minus;</button></h4>
+                  <div class="form-group form-inline">
+                    <label for="date" class="mr-sm-2">Date</label>
+                    <input type="date" name="date" id="date" class="form-control" disabled="true" [value]="dateSelected" formControlName="dateCtrl">
+                  </div>
+
+                  <div class="form-group form-inline">
+                    <label for="type" class="mr-sm-2">Type</label>
+                    <select name="type" id="type" class="form-control" formControlName="typeCtrl">
+                      <option value="diesel">diesel</option>
+                      <option value="gasoline">gasoline</option>
+                      <option value="petrol">petrol</option>
+                      <option value="butane">butane</option>
+                      <option value="natural_gas">natural gas</option>
+                      <option value="propane">propane</option>
+                      <option value="kerosene">kerosene</option>
+                      <option value="fuel_oil">fuel oil</option>
+                      <option value="gas_oil">gas oil</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group form-inline">
+                    <label for="value" class="mr-sm-2">Value</label>
+                    <input type="number" class="form-control mr-sm-2" id="value" name="value" min="0" formControlName="valueCtrl">
+                    <span class="help-block text-danger mr-sm-2"
+                          *ngIf="!getFuelGroups().controls[i].get('valueCtrl').valid && getFuelGroups().controls[i].get('valueCtrl').touched">
+                          Please enter a valid value!
+                    </span>
+                  </div>
+
+                  <div class="form-group form-inline">
+                    <label for="unit" class="mr-sm-2">Unit</label>
+                    <select name="unit" id="unit" class="form-control" formControlName="unitCtrl">
+                      <option value="tonnes">tonnes</option>
+                      <option value="liters">liters</option>
+                      <option value="gallons">gallons</option>
+                      <option value="uk_therms">UK therms</option>
+                      <option value="us_therms">US therms</option>
+                      <option value="MMBtu">MMBtu</option>
+                      <option value="cubic_meters">cubic meters</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+                <button type="button" class="btn btn-success mr-sm-2" (click)="onAddFuelGroup()">&plus;</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!fuelsForm.valid">{{fSubmitButton}}</button>
+              </form>
+
+              <!--LOADING SPINNER - FUELS CALCULATION-->
+              <app-loading-spinner *ngIf="isCalculatingF"></app-loading-spinner>
+
+              <!--SUCCESS ALERT - AFTER SUBMITTING-->
+              <div *ngIf="completeFuelForm">
+                <div class="alert alert-success" role="alert">
+                  <p>You data has been saved!<p>
+                  <p>Estimated CO2 equivalent for fuels submitted for the date {{dateSelected | date: "longDate"}} is <span class="bold-value">{{fTotal}} kilogram</span></p>
+                </div>
+
+                <span *ngIf="fWantToUpdate" class="help-block mr-sm-2">Do you want to update?</span>
+                <button *ngIf="fWantToUpdate" type="button" class="btn btn-warning mr-sm-2"  (click)="onRefactorFFormWithGivenDate()">Yes</button>
+                <button *ngIf="fWantToUpdate" type="button" class="btn btn-danger mr-sm-2" (click)="fWantToUpdate=!fWantToUpdate">No</button>
+              </div>
+              <!---->
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+

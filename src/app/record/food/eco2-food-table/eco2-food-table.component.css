@@ -1,0 +1,11 @@
+table {
+  display:block;
+  height : 600px;
+  width: auto;
+  overflow-y : scroll;
+}
+
+th, td{
+  padding-left: 30px;
+  padding-right: 30px;
+}
