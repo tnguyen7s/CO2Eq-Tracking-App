@@ -30,6 +30,8 @@ import { ConvertPipe } from './shared/pipes/convert.pipe';
 import { Eco2FlightChartComponent } from './record/flight/eco2-flight-chart/eco2-flight-chart.component';
 import { FacebookShareComponent } from './shared/social-sharing-buttons/facebook-share/facebook-share.component';
 import { LinkedInShareComponent } from './shared/social-sharing-buttons/linked-in-share/linked-in-share.component';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,11 @@ import { LinkedInShareComponent } from './shared/social-sharing-buttons/linked-i
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DragDropModule
+    DragDropModule,
+    ShareButtonsModule.withConfig({
+      debug: true
+    }),
+    ShareIconsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

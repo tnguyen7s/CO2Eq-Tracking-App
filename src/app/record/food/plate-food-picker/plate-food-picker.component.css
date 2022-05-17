@@ -36,8 +36,7 @@
 
 .card:hover {
   transform: translateY(-5px) scale(1.005) translateZ(0);
-  box-shadow: 0 24px 36px rgba(0,0,0,0.11),
-    0 24px 46px var(--box-shadow-color);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px var(--box-shadow-color);
 }
 
 .card:hover .overlay {
@@ -49,7 +48,7 @@
   background: var(--bg-color);
 }
 
-.card.on-plate{
+.card.on-plate {
   background: var(--bg-color);
 }
 
@@ -59,10 +58,8 @@
 
 .card:active {
   transform: scale(1) translateZ(0);
-  box-shadow: 0 15px 24px rgba(0,0,0,0.11),
-    0 15px 24px var(--box-shadow-color);
+  box-shadow: 0 15px 24px rgba(0, 0, 0, 0.11), 0 15px 24px var(--box-shadow-color);
 }
-
 
 /*PLATE
 Source: https://dev.to/dhintz89/css-plate-for-your-recipe-app-29p7
@@ -96,158 +93,152 @@ Source: https://dev.to/dhintz89/css-plate-for-your-recipe-app-29p7
   text-align: center;
 }
 
-
 .inner_plate h3 {
-    max-width: 250px;
-    padding: 0 15px;
+  max-width: 250px;
+  padding: 0 15px;
 }
 
-
 /*ICONS*/
-
-.fa-apple
-{
+.fa-apple {
   content: url("https://img.icons8.com/color/48/ffffff/apple.png");
 }
 
-.fa-avocado{
+.fa-avocado {
   content: url("https://img.icons8.com/emoji/48/ffffff/avocado-emoji.png");
 }
 
-.fa-banana{
+.fa-banana {
   content: url("https://img.icons8.com/color/48/ffffff/banana.png");
 }
 
-.fa-bean{
+.fa-bean {
   content: url("https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/60/ffffff/external-bean-vegetable-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png");
 }
 
-.fa-beef{
+.fa-beef {
   content: url("https://img.icons8.com/emoji/48/ffffff/cut-of-meat-emoji.png");
 }
 
-.fa-beer{
+.fa-beer {
   content: url("https://img.icons8.com/color/48/ffffff/beer.png");
 }
 
-.fa-grape{
-  content: url("https://img.icons8.com/external-dreamcreateicons-outline-color-dreamcreateicons/64/ffffff/external-grape-autumn-season-dreamcreateicons-outline-color-dreamcreateicons.png")
+.fa-grape {
+  content: url("https://img.icons8.com/external-dreamcreateicons-outline-color-dreamcreateicons/64/ffffff/external-grape-autumn-season-dreamcreateicons-outline-color-dreamcreateicons.png");
 }
 
-.fa-berry{
-  content: url("https://img.icons8.com/external-filled-outlines-amoghdesign/32/ffffff/external-berry-fruits-and-vegetables-filled-outlines-amoghdesign.png")
+.fa-berry {
+  content: url("https://img.icons8.com/external-filled-outlines-amoghdesign/32/ffffff/external-berry-fruits-and-vegetables-filled-outlines-amoghdesign.png");
 }
 
-.fa-bread{
-  content: url("https://img.icons8.com/emoji/48/ffffff/bread-emoji.png")
+.fa-bread {
+  content: url("https://img.icons8.com/emoji/48/ffffff/bread-emoji.png");
 }
 
-.fa-cheese{
-  content: url("https://img.icons8.com/emoji/48/ffffff/cheese-wedge-emoji.png")
+.fa-cheese {
+  content: url("https://img.icons8.com/emoji/48/ffffff/cheese-wedge-emoji.png");
 }
 
-.fa-chicken{
+.fa-chicken {
   content: url("https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/ffffff/external-chicken-politics-flaticons-lineal-color-flat-icons.png");
 }
 
-.fa-chocolate{
+.fa-chocolate {
   content: url("https://img.icons8.com/office/40/ffffff/chocolate-bar.png");
 }
 
-.fa-cirtrus
-{
+.fa-cirtrus {
   content: url("https://img.icons8.com/doodle/48/ffffff/citrus.png");
 }
 
-.fa-coffee{
+.fa-coffee {
   content: url("https://img.icons8.com/office/40/ffffff/iced-coffee.png");
 }
 
-.fa-fish{
-  content: url("https://img.icons8.com/emoji/48/ffffff/fish-emoji.png")
+.fa-fish {
+  content: url("https://img.icons8.com/emoji/48/ffffff/fish-emoji.png");
 }
 
-.fa-lamb{
-  content: url("https://img.icons8.com/color/48/ffffff/rack-of-lamb.png")
+.fa-lamb {
+  content: url("https://img.icons8.com/color/48/ffffff/rack-of-lamb.png");
 }
 
-.fa-egg{
+.fa-egg {
   content: url("https://img.icons8.com/emoji/48/ffffff/egg-emoji.png");
 }
 
-.fa-almond{
-  content: url("https://img.icons8.com/external-others-pike-picture/50/ffffff/external-Almond-nut-others-pike-picture.png")
+.fa-almond {
+  content: url("https://img.icons8.com/external-others-pike-picture/50/ffffff/external-Almond-nut-others-pike-picture.png");
 }
 
-.fa-cow{
+.fa-cow {
   content: url("https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/ffffff/external-milk-vegan-and-vegetarian-flaticons-lineal-color-flat-icons.png");
 }
 
-.fa-rice{
-  content: url("https://img.icons8.com/color-glass/48/ffffff/grains-of-rice.png")
+.fa-rice {
+  content: url("https://img.icons8.com/color-glass/48/ffffff/grains-of-rice.png");
 }
 
-.fa-oat{
-  content: url("https://img.icons8.com/dusk/64/ffffff/oat-milk.png")
+.fa-oat {
+  content: url("https://img.icons8.com/dusk/64/ffffff/oat-milk.png");
 }
 
-.fa-soy{
-  content: url("https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/ffffff/external-soy-milk-vegan-and-vegetarian-flaticons-lineal-color-flat-icons.png")
-}
-.fa-nut{
-  content: url("https://img.icons8.com/emoji/48/ffffff/peanuts-emoji.png")
+.fa-soy {
+  content: url("https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/ffffff/external-soy-milk-vegan-and-vegetarian-flaticons-lineal-color-flat-icons.png");
 }
 
-.fa-oatmeal{
-  content: url("https://img.icons8.com/external-others-pike-picture/50/ffffff/external-Oatmeal-Bath-dry-skin-others-pike-picture.png")
+.fa-nut {
+  content: url("https://img.icons8.com/emoji/48/ffffff/peanuts-emoji.png");
 }
 
-.fa-pasta{
-  content: url("https://img.icons8.com/external-flaticons-flat-flat-icons/64/ffffff/external-pasta-world-cuisine-flaticons-flat-flat-icons.png")
+.fa-oatmeal {
+  content: url("https://img.icons8.com/external-others-pike-picture/50/ffffff/external-Oatmeal-Bath-dry-skin-others-pike-picture.png");
 }
 
-.fa-pea{
+.fa-pasta {
+  content: url("https://img.icons8.com/external-flaticons-flat-flat-icons/64/ffffff/external-pasta-world-cuisine-flaticons-flat-flat-icons.png");
+}
+
+.fa-pea {
   content: url("https://img.icons8.com/color/48/ffffff/peas.png");
 }
 
-.fa-pork{
+.fa-pork {
   content: url("https://img.icons8.com/office/40/ffffff/bacon.png");
 }
 
-.fa-potato{
-  content: url("https://img.icons8.com/officel/40/ffffff/potato.png")
+.fa-potato {
+  content: url("https://img.icons8.com/officel/40/ffffff/potato.png");
 }
 
-.fa-prawned{
+.fa-prawned {
   content: url("https://img.icons8.com/color/48/ffffff/prawn.png");
 }
 
-.fa-tea{
-  content: url("https://img.icons8.com/external-febrian-hidayat-outline-color-febrian-hidayat/64/ffffff/external-tea-restaurant-febrian-hidayat-outline-color-febrian-hidayat.png")
+.fa-tea {
+  content: url("https://img.icons8.com/external-febrian-hidayat-outline-color-febrian-hidayat/64/ffffff/external-tea-restaurant-febrian-hidayat-outline-color-febrian-hidayat.png");
 }
 
-.fa-tofu{
-  content: url("https://img.icons8.com/external-justicon-flat-justicon/64/ffffff/external-tofu-healthy-food-and-vegan-justicon-flat-justicon-1.png")
+.fa-tofu {
+  content: url("https://img.icons8.com/external-justicon-flat-justicon/64/ffffff/external-tofu-healthy-food-and-vegan-justicon-flat-justicon-1.png");
 }
 
-
-.fa-tomato{
-  content: url("https://img.icons8.com/external-flat-land-kalash/64/ffffff/external-food-food-flat-land-kalash-15.png")
+.fa-tomato {
+  content: url("https://img.icons8.com/external-flat-land-kalash/64/ffffff/external-food-food-flat-land-kalash-15.png");
 }
 
-.fa-wine{
-  content: url("https://img.icons8.com/color/48/ffffff/wine-and-glass.png")
+.fa-wine {
+  content: url("https://img.icons8.com/color/48/ffffff/wine-and-glass.png");
 }
 
-.fa-weight-scale{
+.fa-weight-scale {
   content: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU9Xiv3bSsajDuvq0LnvH3FYJ73fj3m3vACsNrFVwcNz_lxe0nrvU7DjPjEX8i0IEPWzY&usqp=CAU");
 }
 
-
 /*weight scale*/
-.weight-scale-display{
+.weight-scale-display {
   justify-content: center;
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   margin-left: 20px;
