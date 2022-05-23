@@ -3,27 +3,16 @@ import { Injectable } from "@angular/core";
 import { Electricity } from "../models/electricity.model";
 import { Fuel } from "../models/fuel.model";
 import { Transport } from "../models/transport.model";
-
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: "root"
 })
 
 export class ThirdPartyAPIService{
-  private CLOVERLY = {
-    API_PUBLIC_KEY: "Bearer public_key:74a2372d12b94cd2f05a",
-    URL: {
-      ELECTRICITY: "https://api-prod-no-cert.cloverly.com/2021-10/estimates/electricity",
-      FUEL: "https://api-prod-no-cert.cloverly.com/2021-10/estimates/fuel",
-      TRANSPORT: "https://api-prod-no-cert.cloverly.com/2021-10/estimates/vehicle"
-    }
-  }
+  private CLOVERLY = environment.CLOVERLY;
 
-  private ACTIVE_API = {
-    API_HOST: "airport-info.p.rapidapi.com",
-    API_KEY: "9a325031d8msha55fada455b8d0cp16bd8ajsn7dc0333a39d5",
-    URL: "https://airport-info.p.rapidapi.com/airport?iata="
-  }
+  private ACTIVE_API = environment.ACTIVE_API;
 
   constructor(private http: HttpClient)
   {
