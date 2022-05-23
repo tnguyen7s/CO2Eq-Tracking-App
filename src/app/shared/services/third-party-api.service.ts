@@ -47,19 +47,38 @@ export class ThirdPartyAPIService{
   }
 
   // FUELS
-  getCo2eOfGivenFuelCloverly(f: Fuel)
+  async getCo2eOfGivenFuelCloverly(f: Fuel)
    {
-      const body = {
-        "fuel": {
-          "type": f.type,
-          "value": f.value,
-          "units": f.units
+     const body = {
+       "fuel": {
+         "type": f.type,
+         "value": f.value,
+         "units": f.units
         }
       }
+      console.log(JSON.stringify(body))
 
-      return this.http.post(this.CLOVERLY.URL.FUEL, body, {
-        headers: new HttpHeaders().set("Authorization", this.CLOVERLY.API_PUBLIC_KEY).set("Content-Type", "application/json")
+      let res = {};
+
+      await fetch(this.CLOVERLY.URL.FUEL, {
+        'method': 'POST',
+        'headers': {
+          "Content-Type": "application/json",
+          "Authorization": this.CLOVERLY.API_PUBLIC_KEY,
+        },
+        'body': JSON.stringify(body),
       })
+      .then((response)=>{
+        return response.json();
+      })
+      .then((data)=>{
+        res = data;
+      })
+      .catch((error)=> {
+        console.log(error);
+      });
+
+      return res;
    }
 
    // Other transports

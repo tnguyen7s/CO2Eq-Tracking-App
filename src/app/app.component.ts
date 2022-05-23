@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 
@@ -12,14 +13,13 @@ export class AppComponent implements OnInit, OnDestroy{
   isAuthenticated = false;
   sub: Subscription;
 
-  constructor(private authService: AuthService)
+  constructor(private authService: AuthService, private route: ActivatedRoute)
   {
   }
 
   ngOnInit()
   {
     this.sub = this.authService.user.subscribe((user)=>{
-      console.log(user);
       if (user && user.token)
       {
         this.isAuthenticated = true;

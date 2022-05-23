@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Electricity } from "../models/electricity.model";
 
@@ -6,6 +7,9 @@ import { Electricity } from "../models/electricity.model";
 })
 export class ElectricityService{
   private cache: {[date:string]: Electricity} = {};
+
+  constructor(private httpClient: HttpClient){
+  }
 
   // READ (ALL)
   getCache()
@@ -30,4 +34,14 @@ export class ElectricityService{
   {
     if (this.cache[date]) delete this.cache[date];
   }
+
+
+  /*******************************************DATABASE OPERATIONS********************************************/
+  // CREATE
+  private saveElectricityToDb(e: Electricity)
+  {
+
+  }
+  // READ
+  // DELETE
 }

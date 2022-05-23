@@ -10,7 +10,9 @@ import { AuthResponse, AuthService } from './auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  @ViewChild("authForm") authForm: NgForm;
+  @ViewChild("signInForm") signInForm: NgForm;
+  @ViewChild("signUpForm") signUpForm: NgForm;
+
   authMode = "Sign In"
   isLoading = false;
   errorMsg: string;
@@ -26,18 +28,23 @@ export class AuthComponent implements OnInit {
 
   onAuthenticate()
   {
-    const {email, password} = this.authForm.form.value;
-    
     let authObservable: Observable<AuthResponse>;
     this.isLoading = true;
 
     if (this.authMode=="Sign In")
     {
-      authObservable  = this.authService.signIn(email, password);
+      const {username, password} = this.signInForm.form.value;
+      authObservable  = this.authService.signIn(username, password);
+
+      this.signInForm.reset();
     }
     else
     {
-      authObservable = this.authService.signUp(email, password);
+      const {username, password, email} = this.signUpForm.form.value;
+
+      authObservable = this.authService.signUp(username, email, password);
+
+      this.signUpForm.resetForm();
     }
 
     authObservable.subscribe(
@@ -52,28 +59,23 @@ export class AuthComponent implements OnInit {
         this.isLoading = false;
       }
     );
-
-    this.authForm.reset();
   }
 
   private handleAuthenticationError(errorRes)
   {
     this.errorMsg = "An unknown error occurs!"
 
-    if (errorRes.error && errorRes.error.error) {
-      switch (errorRes.error.error.message) {
-        case 'EMAIL_EXISTS':
-          this.errorMsg = 'This email already exists!';
+    if (errorRes.status) {
+      switch (errorRes.status) {
+        case 401:
+          this.errorMsg = 'Login failed!';
           break;
-        case 'INVALID_PASSWORD':
-          this.errorMsg = 'This password is invalid!';
+        case 403:
+          if (errorRes.error){
+            const failedAttribute = Object.keys(errorRes.error)[0];
+            this.errorMsg = failedAttribute + ': '+ errorRes.error[failedAttribute];
+          }
           break;
-        case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-          this.errorMsg =
-            'We have blocked all requests from this device due to unusual activity. Try again later.';
-          break;
-        case 'EMAIL_NOT_FOUND':
-          this.errorMsg = 'This email does not exist';
       }
     }
   }

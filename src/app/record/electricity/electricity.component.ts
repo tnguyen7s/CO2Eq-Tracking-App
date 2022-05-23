@@ -37,6 +37,7 @@ export class ElectricityComponent implements OnInit{
 
   // used to display the eCO2 result after form is "saved"
   eDisplayed: Electricity;
+  fuelsDisplayed: Fuel[];
   fTotal: number;
 
   // used to control the display/undisplay the prompt block "Do you want to update?" when user clicks no
@@ -202,10 +203,11 @@ export class ElectricityComponent implements OnInit{
                     }
           );
 
-
+    this.electricityForm.reset();
+    this.datePickerForm.reset();
   }
 
-  onSubmitFuelsForm(){
+  async onSubmitFuelsForm(){
     this.isCalculatingF = true;
 
     this.fuelService.removeFuelByDate(this.dateSelected);
@@ -213,26 +215,25 @@ export class ElectricityComponent implements OnInit{
     const fuels = <FormArray>this.fuelsForm.get("fuelsArray");
     let f: Fuel;
     this.fTotal = 0;
+    this.fuelsDisplayed = [];
 
     for (let fuel of fuels.controls){
       const {typeCtrl, valueCtrl, unitCtrl, dateCtrl} = fuel.value;
-      f = new Fuel(typeCtrl, valueCtrl, unitCtrl, dateCtrl);
 
-      this.thirdPartyAPIService.getCo2eOfGivenFuelCloverly(f)
-                                .subscribe(
-                                  (resData) => {
-                                    f.co2eInKg = resData["total_co2e_in_kg"];
-                                    this.fuelService.addFuel(f);
-                                    this.fTotal += f.co2eInKg;
-                                    this.completeFuelForm = true;
-                                    this.isCalculatingF = false;
-                                  },
-                                  (error) => {
-                                    console.log(error)
-                                    this.isCalculatingF = false;
-                                  }
-      );
+      f = new Fuel(typeCtrl, valueCtrl, unitCtrl, dateCtrl);
+      const resData = await this.thirdPartyAPIService.getCo2eOfGivenFuelCloverly(f)
+      f.co2eInKg = resData["total_co2e_in_kg"];
+
+      this.fuelService.addFuel(f);
+      this.fuelsDisplayed.push(f);
+      this.fTotal += f.co2eInKg;
     }
+
+    this.completeFuelForm = true;
+    this.isCalculatingF = false;
+
+    this.fuelsForm.reset();
+    this.datePickerForm.reset();
   }
 
   onAddFuelGroup()

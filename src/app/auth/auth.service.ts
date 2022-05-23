@@ -6,25 +6,25 @@ import { tap } from "rxjs/operators";
 import { User } from "./user.model";
 
 const BACKEND_AUTH = {
-  SIGNUP_URL: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=",
-  SIGNIN_URL: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=",
-  API_KEY: "AIzaSyDl1DhtJYpUyxWijcHujqPv9QI27AEmtlQ"
+  SIGNUP_URL: "http://127.0.0.1:8000/auth/signup",
+  SIGNIN_URL: "http://127.0.0.1:8000/auth/login",
 }
 
 export interface AuthResponse{
-  idToken: string;
+  id: number;
+  username: string;
   email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean;
+  refresh_token: string;
+  token_expiration_date: string;
+  first_name?: string;
+  last_name?: string;
 }
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService{
-  // user object helps identify if user has authenticated: allow navigation menu, allow to other routes, allow response from servers 
+  // user object helps identify if user has authenticated: allow navigation menu, allow to other routes, allow response from servers
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
@@ -32,12 +32,14 @@ export class AuthService{
   {
   }
 
-  signUp(email: string, password: string)
+  signUp(username: string, email: string, password: string)
   {
-    return this.http.post<AuthResponse>(BACKEND_AUTH.SIGNUP_URL + BACKEND_AUTH.API_KEY, {
-      "email": email,
+    return this.http.post<AuthResponse>(BACKEND_AUTH.SIGNUP_URL, {
+      "username": username,
       "password": password,
-      "returnSercureToken": true
+      "email": email,
+      "first_name": "Unknown",
+      "last_name": "Unknown"
     })
     .pipe(
       tap(
@@ -45,12 +47,11 @@ export class AuthService{
     ));
   }
 
-  signIn(email: string, password: string)
+  signIn(username: string, password: string)
   {
-    return this.http.post<AuthResponse>(BACKEND_AUTH.SIGNIN_URL + BACKEND_AUTH.API_KEY, {
-      "email": email,
+    return this.http.post<AuthResponse>(BACKEND_AUTH.SIGNIN_URL, {
+      "username": username,
       "password": password,
-      "returnSercureToken": true
     })
     .pipe(tap(resData=> this.handleAuthentication(resData)));
   }
@@ -61,7 +62,7 @@ export class AuthService{
 
     if (!loadedData) return;
 
-    const user = new User(loadedData.email, loadedData.userId, loadedData._token, new Date(loadedData._tokenExpirationDate));
+    const user = new User(loadedData.userId, loadedData.username, loadedData.email,  loadedData._token, new Date(loadedData._tokenExpirationDate));
 
     if (user.token)
     {
@@ -74,12 +75,10 @@ export class AuthService{
 
   private handleAuthentication(resData: AuthResponse)
   {
-    const expiresIn = 3600*1000;//millisecond
-    const expirationDate = new Date(new Date().getTime() + expiresIn);
-
-    const user = new User(resData.email, resData.localId, resData.idToken, expirationDate);
+    const user = new User(resData.id, resData.username, resData.email,resData.refresh_token, new Date(resData.token_expiration_date));
     this.user.next(user);
 
+    const expiresIn = user.tokenExpirationDate.getTime() - new Date().getTime();
     this.autoLogOut(expiresIn);
 
     localStorage.setItem("userData", JSON.stringify(user));

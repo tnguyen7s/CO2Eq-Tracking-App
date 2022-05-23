@@ -1,4 +1,4 @@
-<share-buttons theme="modern-dark"
+<!-- <share-buttons theme="modern-dark"
 [include]="['copy', 'facebook', 'email', 'messenger', 'linkedin', 'pinterest', 'reddit', 'twitter', 'viber', 'whatsapp']"
 [showIcon]="true"
 [showText]="true"
@@ -8,4 +8,28 @@ twitterAccount="rodrigokamada"
 class="pt-5"
 
 >
-</share-buttons>
+</share-buttons> -->
+
+<!--Card made by Lyon Etyo: https://codepen.io/lyon-etyo/pen/OJmyMGd-->
+<div class="row" >
+  <div class="col-md-8 mx-auto" *ngFor="let blog of blogs">
+    <div class="card-container">
+      <div class="card">
+        <div class="card__header">
+          <div class="card__image"  [ngStyle]="{'background-image': 'url(' + blog.thumbnailUrl+')'}">
+            <span class="tag tag-blue">{{blog.tag}}</span>
+          </div>
+        </div>
+        <div class="card__body">
+          <a>{{blog.title}}</a>
+          <p>{{blog.summary}}</p>
+        </div>
+        <div class="card__footer">
+          <div class="user">
+              <small>{{blog.dateWritten | date:"longDate"}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
