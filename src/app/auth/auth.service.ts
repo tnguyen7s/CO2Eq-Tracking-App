@@ -104,4 +104,23 @@ export class AuthService{
     }, expirationDuration);
   }
 
+  getToken(){
+    let token: string;
+    this.user.subscribe((user)=> {
+      token = user.token;
+    })
+
+    return token;
+  }
+
+  getUserId()
+  {
+    let id: number;
+    this.user.subscribe((user)=> {
+      id = user.userId;
+    })
+
+    return id
+  }
+
 }

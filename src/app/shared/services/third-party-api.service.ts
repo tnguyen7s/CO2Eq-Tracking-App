@@ -5,14 +5,13 @@ import { Fuel } from "../models/fuel.model";
 import { Transport } from "../models/transport.model";
 import { environment } from '../../../environments/environment';
 
+const CLOVERLY = environment.CLOVERLY;
+const ACTIVE_API = environment.ACTIVE_API;
+
 @Injectable({
   providedIn: "root"
 })
-
 export class ThirdPartyAPIService{
-  private CLOVERLY = environment.CLOVERLY;
-
-  private ACTIVE_API = environment.ACTIVE_API;
 
   constructor(private http: HttpClient)
   {
@@ -30,8 +29,8 @@ export class ThirdPartyAPIService{
       }
 
       //send post request
-      return this.http.post(this.CLOVERLY.URL.ELECTRICITY, body, {
-        headers: new HttpHeaders().set("Authorization", this.CLOVERLY.API_PUBLIC_KEY).set("Content-Type", "application/json")
+      return this.http.post(CLOVERLY.URL.ELECTRICITY, body, {
+        headers: new HttpHeaders().set("Authorization", CLOVERLY.API_PUBLIC_KEY).set("Content-Type", "application/json")
       });
   }
 
@@ -49,15 +48,20 @@ export class ThirdPartyAPIService{
 
       let res = {};
 
-      await fetch(this.CLOVERLY.URL.FUEL, {
+      await fetch(CLOVERLY.URL.FUEL, {
         'method': 'POST',
         'headers': {
           "Content-Type": "application/json",
-          "Authorization": this.CLOVERLY.API_PUBLIC_KEY,
+          "Authorization": CLOVERLY.API_PUBLIC_KEY,
         },
         'body': JSON.stringify(body),
       })
       .then((response)=>{
+        console.log(response);
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+
         return response.json();
       })
       .then((data)=>{
@@ -85,8 +89,8 @@ export class ThirdPartyAPIService{
       }
      };
 
-     return this.http.post(this.CLOVERLY.URL.TRANSPORT, body, {
-       headers: new HttpHeaders().set("Authorization", this.CLOVERLY.API_PUBLIC_KEY).set("Content-Type", "application/json")
+     return this.http.post(CLOVERLY.URL.TRANSPORT, body, {
+       headers: new HttpHeaders().set("Authorization", CLOVERLY.API_PUBLIC_KEY).set("Content-Type", "application/json")
      })
    }
 
@@ -96,13 +100,18 @@ export class ThirdPartyAPIService{
    async getAirportInfo(airportIATA: string)
    {
       let res = {};
-      await fetch(this.ACTIVE_API.URL+airportIATA.toUpperCase(), {
+      await fetch(ACTIVE_API.URL+airportIATA.toUpperCase(), {
         headers: {
-          "X-RapidAPI-Host": this.ACTIVE_API.API_HOST,
-          "X-RapidAPI-Key":  this.ACTIVE_API.API_KEY
+          "X-RapidAPI-Host": ACTIVE_API.API_HOST,
+          "X-RapidAPI-Key":  ACTIVE_API.API_KEY
         }
       })
       .then((response)=>{
+        console.log(response);
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        
         return response.json();
       })
       .then((data)=>{

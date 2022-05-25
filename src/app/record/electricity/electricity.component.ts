@@ -104,13 +104,15 @@ export class ElectricityComponent implements OnInit{
       "fuelsArray": new FormArray([fuelForm])
     })
 
-    if (this.dateSelected){
+    if (this.datePickerForm.get("datePickerCtrl").value){
       this.refactorForm();
     }
   }
 
   onSelectDate(date: string){
-    this.router.navigate(["/record", "electricity", date])
+    if (date){
+      this.router.navigate(["/record", "electricity", date])
+    }
   }
 
   refactorForm()
@@ -119,10 +121,11 @@ export class ElectricityComponent implements OnInit{
     this.onRefactorFFormWithGivenDate();
   }
 
-  onRefactorEFormWithGivenDate(){
+  async onRefactorEFormWithGivenDate(){
     this.completeElectricityForm = false;
 
-    const electricity = this.electricityService.searchElectricityByDate(this.dateSelected);
+    console.log(this.dateSelected)
+    const electricity = await this.electricityService.searchElectricityByDate(this.dateSelected);
 
     if (electricity)
     {
@@ -145,11 +148,12 @@ export class ElectricityComponent implements OnInit{
     }
   }
 
-  onRefactorFFormWithGivenDate()
+  async onRefactorFFormWithGivenDate()
   {
     this.completeFuelForm = false;
 
-    const fuels= this.fuelService.searchFuelByDate(this.dateSelected);
+    console.log(this.dateSelected)
+    const fuels= await this.fuelService.searchFuelsByDate(this.dateSelected);
 
     (<FormArray>this.fuelsForm.get("fuelsArray")).clear();
 
@@ -180,10 +184,10 @@ export class ElectricityComponent implements OnInit{
     }
   }
 
-  onSubmitElectricityForm(){
+  async onSubmitElectricityForm(){
     this.isCalculatingE = true;
 
-    this.electricityService.removeElectricityByDate(this.dateSelected);
+    await this.electricityService.removeElectricityByDate(this.dateSelected);
 
     const {valueCtrl, unitCtrl, dateCtrl} = this.electricityForm.value;
     const e = new Electricity(valueCtrl, unitCtrl, dateCtrl);
@@ -210,7 +214,7 @@ export class ElectricityComponent implements OnInit{
   async onSubmitFuelsForm(){
     this.isCalculatingF = true;
 
-    this.fuelService.removeFuelByDate(this.dateSelected);
+    await this.fuelService.removeFuelsByDate(this.dateSelected);
 
     const fuels = <FormArray>this.fuelsForm.get("fuelsArray");
     let f: Fuel;
@@ -223,11 +227,13 @@ export class ElectricityComponent implements OnInit{
       f = new Fuel(typeCtrl, valueCtrl, unitCtrl, dateCtrl);
       const resData = await this.thirdPartyAPIService.getCo2eOfGivenFuelCloverly(f)
       f.co2eInKg = resData["total_co2e_in_kg"];
+      console.log(resData["total_co2e_in_kg"])
 
-      this.fuelService.addFuel(f);
       this.fuelsDisplayed.push(f);
       this.fTotal += f.co2eInKg;
     }
+
+    this.fuelService.createFuelsByDate(this.fuelsDisplayed);
 
     this.completeFuelForm = true;
     this.isCalculatingF = false;

@@ -5,7 +5,8 @@ export class Transport{
               public fuelEfficiency: number,
               public fuelEfUnit: string,
               public fuelType: string,
-              public eCo2InKg: number = 0)
+              public eCo2InKg: number = 0,
+              public id: number = -1)
               {
                 this.date = date;
                 this.distance = distance;
@@ -14,6 +15,7 @@ export class Transport{
                 this.fuelEfUnit = fuelEfUnit;
                 this.fuelType = fuelType;
                 this.eCo2InKg = eCo2InKg;
+                this.id = id;
               }
 
     public clone()

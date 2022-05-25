@@ -144,14 +144,14 @@ export class FlightComponent implements OnInit {
   }
 
   // REFACTOR FORM IF FORM ALREADY SAVED
-  refactorFlightForm(date: string)
+  async refactorFlightForm(date: string)
   {
     // by default reset the flight form
     this.resetFlightForm();
 
     if (!date) return;
 
-    const flights = this.flightService.searchFlightsByDate(date);
+    const flights = await this.flightService.searchFlightsByDate(date);
 
     if (flights.length>0)
     {
@@ -234,7 +234,7 @@ export class FlightComponent implements OnInit {
     const dateSelected = this.datePickerForm.get("dateCtrl").value;
 
     // remove the flights if they have been entered before and now users want to update
-    this.flightService.removeFlightsOnDate(dateSelected);
+    await this.flightService.removeFlightsOnDate(dateSelected);
 
     // submit the form
     let { sourceIATACtrl, destIATACtrl, cabinClassCtrl, stopoversArray } =
@@ -269,7 +269,7 @@ export class FlightComponent implements OnInit {
       index++;
     }
 
-    this.flightService.addFlights(this.newFlights, dateSelected);
+    this.flightService.addFlightsByDate(this.newFlights, dateSelected);
 
     this.isCalculatingEco2 = false;
     this.showTotal = true;

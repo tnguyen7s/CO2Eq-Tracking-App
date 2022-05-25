@@ -18,7 +18,10 @@ export const environment = {
     API_HOST: "airport-info.p.rapidapi.com",
     API_KEY: "9a325031d8msha55fada455b8d0cp16bd8ajsn7dc0333a39d5",
     URL: "https://airport-info.p.rapidapi.com/airport?iata="
-  }
+  },
+
+  // Back end
+  APP_BACK_END_BASE_URL: "http://127.0.0.1:8000"
 }
 
 

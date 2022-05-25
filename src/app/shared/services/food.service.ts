@@ -1,6 +1,20 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Meal } from "../models/meal.model";
+import { environment } from '../../../environments/environment';
+import { AuthService } from "src/app/auth/auth.service";
+import { HttpClient } from "@angular/common/http";
+
+const BACKEND_URL = environment.APP_BACK_END_BASE_URL + "/record/meals/";
+
+export interface APIMealModel{
+  'id'?: number,
+  'date': string,
+  'meal': string,
+  'food_products': string,
+  'kg_co2eq': number,
+  'consumer': number
+}
 
 @Injectable({
   providedIn: "root"
@@ -8,10 +22,12 @@ import { Meal } from "../models/meal.model";
 
 export class FoodService{
   private cache: {
-    [date: string]:{
-      [meal:string]: Meal
-    }
+    [date: string]: Meal[]
   } = {};
+
+  constructor(private authService: AuthService, private http: HttpClient)
+  {
+  }
 
   // event is triggered when wanting to empty the plate
   public resetPlate = new Subject<boolean>();
@@ -19,15 +35,21 @@ export class FoodService{
   // event is triggered when wanting to set the food plate
   public setPlate = new Subject<boolean>();
 
-  // CREATE ONE
-  addMealToCache(foodList: string[], totalEco2InKg: number, date: string, meal:string)
+  // CREATE MANY
+  addMealsToCache(meals: Meal[])
   {
-    const mealObj = new Meal(foodList.slice(), totalEco2InKg, date, meal);
-    if (!this.cache[date]){
-      this.cache[date] = {};
-    }
+    this.saveMealsToDb(meals).subscribe(
+      (resData) => {
+        console.log(resData);
 
-    this.cache[date][meal] = mealObj;
+        const date = meals[0].date;
+        this.cache[date] = [];
+        resData.forEach((m)=> this.cache[date].push(new Meal(JSON.parse(m.food_products), m.kg_co2eq, m.date, m.meal, m.id)))
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   }
 
   //READ ALL
@@ -44,21 +66,105 @@ export class FoodService{
     return cacheCopy;
   }
 
-  // READ ONE
-  getMealsByDate(date: string): {[meal:string]: Meal}
+  // READ MANY
+  async getMealsByDate(date: string): Promise<Meal[]>
   {
-    const data = this.cache[date];
-    if (data){
-      const mealsCopy = {};
+    if (!this.cache[date] || this.cache[date].length<=0)
+    {
+      // if not in cache maybe in db
+      const responseData = await this.readMealsFromDb(date);
 
-      mealsCopy["breakfast"] = new Meal(data["breakfast"].foodProducts.slice(), data["breakfast"].totalEco2InKg, date, "breakfast");
-      mealsCopy["lunch"] = new Meal(data["lunch"].foodProducts.slice(), data["lunch"].totalEco2InKg, date, "lunch");
-      mealsCopy["dinner"] = new Meal(data["dinner"].foodProducts.slice(), data["dinner"].totalEco2InKg, date, "dinner");
+      if (responseData.length>0)
+      {
+        this.cache[date] = []
 
-      return mealsCopy;
+        for (let meal of responseData){
+          let foodProducts = JSON.parse(meal.food_products)
+          let parsedMeal = new Meal(foodProducts, meal.kg_co2eq, meal.date, meal.meal, meal.id);
+          this.cache[date].push(parsedMeal);
+        }
+
+      }
     }
 
-    return null;
+    return this.cache[date]? this.cache[date].slice():[];
   }
 
+  // DELETE (MANY)
+  async removeMealsByDate(date: string)
+  {
+    await this.deleteMealsFromDb(date);
+    this.cache[date]=[];
+  }
+
+  /*******************************************DATABASE OPERATIONS********************************************/
+  // CREATE
+  private saveMealsToDb(meals: Meal[])
+  {
+    const body = meals.map((m)=> {
+      return {
+        'id': -1,
+        'date': m.date,
+        'meal': m.meal,
+        'food_products': JSON.stringify(m.foodProducts),
+        'kg_co2eq': m.totalEco2InKg,
+        'consumer': this.authService.getUserId()
+      }
+    });
+
+    return this.http.post<APIMealModel[]>(BACKEND_URL+meals[0].date, body, {
+      headers:{
+        'Authorization': `Token ${this.authService.getToken()}`
+      }
+    });
+  }
+  // READ
+  private async readMealsFromDb(date: string): Promise<APIMealModel[]>
+  {
+    let responseData: any=[];
+
+    await fetch(BACKEND_URL+date, {
+      method: "GET",
+      headers: {
+        "Authorization": `Token ${this.authService.getToken()}`
+      }
+    })
+    .then((response)=>{
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      console.log(response);
+      return response.json();
+    })
+    .then((data)=>{
+      responseData = data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    return <APIMealModel[]>responseData;
+  }
+
+  // DELETE
+  private async deleteMealsFromDb(date: string){
+    await fetch(BACKEND_URL+date, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Token ${this.authService.getToken()}`
+      }
+    })
+    .then((response)=>{
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      console.log(response);
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+  }
 }
+

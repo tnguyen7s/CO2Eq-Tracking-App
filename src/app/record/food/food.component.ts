@@ -3,6 +3,7 @@ import { FormControl, FormGroup, NgForm, NgModel, Validators } from '@angular/fo
 import { ActivatedRoute, Router} from '@angular/router';
 import { FoodProduct } from 'src/app/shared/models/food-product.model';
 import { Foods } from 'src/app/shared/models/foods.model';
+import { Meal } from 'src/app/shared/models/meal.model';
 import { FoodService } from 'src/app/shared/services/food.service';
 
 @Component({
@@ -67,28 +68,36 @@ export class FoodComponent implements OnInit {
     }
   }
 
-  onDateSelected(date: string)
+  async onDateSelected(date: string)
   {
     // change the route
     this.router.navigate(["/record", "food", date]);
 
     // load existing data if any
-    const savedMeals = this.foodService.getMealsByDate(date);
-    if (savedMeals)
+    const savedMeals = await this.foodService.getMealsByDate(date);
+    console.log("savedMeals", savedMeals)
+    if (savedMeals.length>0)
     {
-      const breakfastFoodNameList = savedMeals["breakfast"].foodProducts;
+      const breakfast = savedMeals.find((meal)=> meal.meal == "breakfast")
+      const breakfastFoodNameList = breakfast.foodProducts;
       this.breakfastFoodList.splice(0, this.breakfastFoodList.length);
       breakfastFoodNameList.forEach((f) => this.breakfastFoodList.push(Foods.FOOD_PRODUCTS_BY_NAME[f]));
 
-      const lunchFoodNameList = savedMeals["lunch"].foodProducts;
+      const lunch = savedMeals.find((meal)=> meal.meal == "lunch")
+      const lunchFoodNameList = lunch.foodProducts;
       this.lunchFoodList.splice(0, this.lunchFoodList.length);
       lunchFoodNameList.forEach((f)=> this.lunchFoodList.push(Foods.FOOD_PRODUCTS_BY_NAME[f]));
 
-      const dinnerFoodNameList = savedMeals["dinner"].foodProducts;
+      const dinner = savedMeals.find((meal)=>  meal.meal == "dinner")
+      const dinnerFoodNameList = dinner.foodProducts;
       this.dinnerFoodList.splice(0, this.dinnerFoodList.length);
       dinnerFoodNameList.forEach((f)=> this.dinnerFoodList.push(Foods.FOOD_PRODUCTS_BY_NAME[f]));
 
       this.foodService.setPlate.next(true);
+    }
+    else
+    {
+      this.foodService.resetPlate.next(true);
     }
   }
 
@@ -134,7 +143,11 @@ export class FoodComponent implements OnInit {
   }
 
   // ON SUBMIT FORM
-  onSubmitFoodForm(){
+  async onSubmitFoodForm(){
+    // if this is for update, need to delete them before updating
+    this.dateSelected = this.dateForm.get("date").value;
+    await this.foodService.removeMealsByDate(this.dateSelected);
+
     // save data to cache
     const foodNamesForBreakfast = []
     const foodNamesForLunch = []
@@ -159,18 +172,18 @@ export class FoodComponent implements OnInit {
       this.totalDinner += f.eco2PerServing;
     })
 
-    const date = this.dateForm.get("date").value;
-    this.foodService.addMealToCache(foodNamesForBreakfast, this.totalBreakfast, date, "breakfast");
-    this.foodService.addMealToCache(foodNamesForLunch, this.totalLunch, date, "lunch");
-    this.foodService.addMealToCache(foodNamesForDinner, this.totalDinner,date, "dinner");
+    const savedMeals: Meal[] = [];
+    savedMeals.push(new Meal(foodNamesForBreakfast, this.totalBreakfast, this.dateSelected, "breakfast"));
+    savedMeals.push(new Meal(foodNamesForLunch, this.totalLunch, this.dateSelected, "lunch"));
+    savedMeals.push(new Meal(foodNamesForDinner, this.totalDinner,this.dateSelected, "dinner"));
+    console.log("savedMeals", savedMeals)
 
+    this.foodService.addMealsToCache(savedMeals);
 
     // reset
     this.breakfastFoodList.splice(0, this.breakfastFoodList.length);
     this.lunchFoodList.splice(0, this.lunchFoodList.length);
     this.dinnerFoodList.splice(0, this.dinnerFoodList.length);
-
-    this.dateSelected = this.dateForm.get("date").value;
 
     this.dateForm.reset();
 

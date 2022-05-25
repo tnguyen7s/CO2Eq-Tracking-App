@@ -64,14 +64,14 @@ export class OtherTransportsComponent implements OnInit {
 
   }
 
-  onDateSelected(date: string)
+  async onDateSelected(date: string)
   {
     if (date){
       // change route
       this.router.navigate(["record", "other-transports", date]);
 
       // refactor the form if data existing
-      const data = this.transportService.getTransportByDate(date);
+      const data = await this.transportService.getTransportByDate(date);
       if (data)
       {
         this.setTransportForm(data.distance, data.distUnit, data.fuelEfficiency, data.fuelEfUnit, data.fuelType)
@@ -88,12 +88,15 @@ export class OtherTransportsComponent implements OnInit {
     }
   }
 
-  onSubmitTransportsForm(){
-    this.isCalculatingEco2 = true;
+  async onSubmitTransportsForm(){
+    const date = this.dateForm.get("dateCtrl").value
+    // delete the transport record, if it is already in the db
+    await this.transportService.removeTransportByDate(date);
 
+    this.isCalculatingEco2 = true;
     // get form input
     const {distanceCtrl, distUnitCtrl, fuelEfficiencyCtrl, fuelEffUnitCtrl, fuelTypeCtrl} = this.transportForm.value;
-    const trip = new Transport(this.dateForm.get("dateCtrl").value, distanceCtrl, distUnitCtrl, fuelEfficiencyCtrl, fuelEffUnitCtrl, fuelTypeCtrl);
+    const trip = new Transport(date, distanceCtrl, distUnitCtrl, fuelEfficiencyCtrl, fuelEffUnitCtrl, fuelTypeCtrl);
 
     // send request and get eco2 in kg
     this.thirdPartApiService.getCo2eOfGivenTransportCloverly(trip)
