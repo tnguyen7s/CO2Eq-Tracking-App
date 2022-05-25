@@ -17,6 +17,6 @@ export const environment = {
   },
 
   // Back end
-  APP_BACK_END_BASE_URL: "https://co2eq-tracking-rest-api.herokuapp.com/"
+  APP_BACK_END_BASE_URL: "https://co2eq-tracking-rest-api.herokuapp.com"
 };
 
