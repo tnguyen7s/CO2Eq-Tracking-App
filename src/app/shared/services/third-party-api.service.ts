@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Electricity } from "../models/electricity.model";
 import { Fuel } from "../models/fuel.model";
 import { Transport } from "../models/transport.model";
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 
 const CLOVERLY = environment.CLOVERLY;
 const ACTIVE_API = environment.ACTIVE_API;

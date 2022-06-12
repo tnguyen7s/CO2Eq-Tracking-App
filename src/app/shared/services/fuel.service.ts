@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Fuel } from "../models/fuel.model";
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { AuthService } from "src/app/auth/auth.service";
 import { HttpClient } from "@angular/common/http";
 

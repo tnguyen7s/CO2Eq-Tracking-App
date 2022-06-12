@@ -6,8 +6,8 @@ import { tap } from "rxjs/operators";
 import { User } from "./user.model";
 
 const BACKEND_AUTH = {
-  SIGNUP_URL: "http://127.0.0.1:8000/auth/signup",
-  SIGNIN_URL: "http://127.0.0.1:8000/auth/login",
+  SIGNUP_URL: "https://co2eq-tracking-rest-api.herokuapp.com/auth/signup",
+  SIGNIN_URL: "https://co2eq-tracking-rest-api.herokuapp.com/auth/login",
 }
 
 export interface AuthResponse{

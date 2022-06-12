@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Transport } from "../models/transport.model";
 import { HttpClient } from "@angular/common/http";
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { AuthService } from "src/app/auth/auth.service";
 
 const BACKEND_URL = environment.APP_BACK_END_BASE_URL + "/record/transport/";
