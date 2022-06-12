@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Electricity } from "../models/electricity.model";
-import { environment } from '../../../environments/environment';
+import { environment } from "src/environments/environment.prod";
 import { AuthService } from "src/app/auth/auth.service";
 
 const BACKEND_URL = environment.APP_BACK_END_BASE_URL + "/record/electricity/";
