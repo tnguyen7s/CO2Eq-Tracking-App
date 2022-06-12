@@ -100,6 +100,7 @@ export class ThirdPartyAPIService{
    async getAirportInfo(airportIATA: string)
    {
       let res = {};
+
       await fetch(ACTIVE_API.URL+airportIATA.toUpperCase(), {
         headers: {
           "X-RapidAPI-Host": ACTIVE_API.API_HOST,
@@ -111,7 +112,7 @@ export class ThirdPartyAPIService{
         if (!response.ok) {
           throw Error(response.statusText);
         }
-        
+
         return response.json();
       })
       .then((data)=>{
