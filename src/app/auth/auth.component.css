@@ -1,0 +1,17 @@
+/* #03A678 */
+button[type="submit"]
+{
+  background-color: #04c153;
+  border-color: #04c153;
+}
+
+button[type="button"]:hover
+{
+  background-color: #04c153;
+  color: white;
+}
+
+button[type="button"]{
+  border-color: #04c153;
+  color: #04c153;
+}

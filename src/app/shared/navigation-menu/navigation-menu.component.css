@@ -38,7 +38,7 @@ a.submenu-indicator-minus ~ ul.submenu {
 }
 
 .colors .green {
-  background: #03A678;
+  background: #09ab4c;
 }
 
 .colors .white {
@@ -69,7 +69,7 @@ a.submenu-indicator-minus ~ ul.submenu {
   line-height: 50px;
   font-weight: 600;
   color: #f0f0f0;
-  background: #03A678;
+  background: #09ab4c;
 }
 
 .jquery-accordion-menu ul {
@@ -92,7 +92,7 @@ a.submenu-indicator-minus ~ ul.submenu {
   text-decoration: none;
   color: #f0f0f0;
   font-size: 18px;
-  background: #03A678;
+  background: #09ab4c;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -104,11 +104,11 @@ a.submenu-indicator-minus ~ ul.submenu {
 
 .jquery-accordion-menu > ul > li.active > a, .jquery-accordion-menu > ul > li:hover > a {
   color: #fff;
-  background: #049372;
+  background: #04c153;
 }
 
 .jquery-accordion-menu > ul > li > a {
-  border-bottom: solid 1px #049372;
+  border-bottom: solid 1px #04c153;
 }
 
 .jquery-accordion-menu ul li a i {
@@ -167,7 +167,7 @@ a.submenu-indicator-minus ~ ul.submenu {
 }
 
 .jquery-accordion-menu ul ul.submenu li:hover > a {
-  border-left-color: #03A678;
+  border-left-color: #09ab4c;
 }
 
 .jquery-accordion-menu ul ul.submenu > li > a {
@@ -246,19 +246,19 @@ a.submenu-indicator-minus ~ ul.submenu {
   }
 }
 .green.jquery-accordion-menu .jquery-accordion-menu-footer, .green.jquery-accordion-menu .jquery-accordion-menu-header, .green.jquery-accordion-menu ul li a {
-  background: #03A678;
+  background: #09ab4c;
 }
 
 .green.jquery-accordion-menu > ul > li.active > a, .green.jquery-accordion-menu > ul > li:hover > a {
-  background: #049372;
+  background: #04c153;
 }
 
 .green.jquery-accordion-menu > ul > li > a {
-  border-bottom-color: #049372;
+  border-bottom-color: #04c153;
 }
 
 .green.jquery-accordion-menu ul ul.submenu li:hover > a {
-  border-left-color: #049372;
+  border-left-color: #04c153;
 }
 
 /*ICONS*/
@@ -331,5 +331,5 @@ a.submenu-indicator-minus ~ ul.submenu {
 }
 
 .jquery-accordion-menu ul ul.submenu li > a.active {
-  border-left-color: #03A678;
+  border-left-color: #09ab4c;
 }

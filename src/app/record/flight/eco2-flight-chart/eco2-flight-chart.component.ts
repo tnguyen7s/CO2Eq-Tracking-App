@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import * as Highcharts from 'highcharts';
-import { throwIfEmpty } from 'rxjs';
-declare var require: any;
-//we deploy the new chart types and features in a separate file called highcharts-more.js
-let TileMap = require('highcharts/modules/tilemap');
-let Exporting = require('highcharts/modules/exporting');
-let ExportData = require('highcharts/modules/export-data');
-let Accessibility = require('highcharts/modules/accessibility');
-let HeatMap = require('highcharts/modules/heatmap');
+import TileMap from 'highcharts/modules/tilemap';
+import Exporting from 'highcharts/modules/exporting';
+import ExportData from 'highcharts/modules/export-data';
+import Accessibility from 'highcharts/modules/accessibility';
+import HeatMap from 'highcharts/modules/heatmap';
 
 HeatMap(Highcharts);
 TileMap(Highcharts);
@@ -103,7 +100,7 @@ export class Eco2FlightChartComponent implements OnInit {
         {
           from: 0,
           to: 234,
-          color: "#EC9706",
+          color: "#04c153",
           name: 'Country whose average person produces CO2eq in a whole year less than that of taking one return flight'
         }
       ]

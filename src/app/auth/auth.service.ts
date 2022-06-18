@@ -3,11 +3,12 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { tap } from "rxjs/operators";
+import { environment } from "src/environments/environment.prod";
 import { User } from "./user.model";
 
 const BACKEND_AUTH = {
-  SIGNUP_URL: "https://co2eq-tracking-rest-api.herokuapp.com/auth/signup",
-  SIGNIN_URL: "https://co2eq-tracking-rest-api.herokuapp.com/auth/login",
+  SIGNUP_URL: environment.APP_BACK_END_BASE_URL + "/auth/signup",
+  SIGNIN_URL: environment.APP_BACK_END_BASE_URL + "/auth/login",
 }
 
 export interface AuthResponse{

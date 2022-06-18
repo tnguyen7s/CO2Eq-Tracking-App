@@ -237,7 +237,7 @@
 
                   <button
                     type="button"
-                    class="btn btn-success mb-2"
+                    class="btn btn-warning mb-2"
                     style="display: block"
                     (click)="onAddStopoverCtrl()"
                   >
@@ -247,7 +247,7 @@
                   <div class="text-right">
                     <button
                     type="submit"
-                    class="btn btn-primary"
+                    class="btn btn-success"
                     [disabled]="!flightForm.valid || nonExistingIATACode1 || nonExistingIATACode2 || !doesStopoverIATAsExist()"
                   >
                     {{isCreateMode? "Submit": "Update"}}

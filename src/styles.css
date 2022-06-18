@@ -15,7 +15,7 @@ h1 {
 }
 
 .card > .card-header > h5 > button {
-  color: #049372;
+  color: #09ab4c;
   font-size: 26px;
   font-weight: 600;
 }
@@ -63,4 +63,18 @@ h4 {
 
 .white-background-highlight {
   background-color: white;
+}
+
+.badge-success{
+  background-color: #09ab4c;
+}
+
+.btn-success, .btn-success:disabled{
+  background-color: #865d40;
+  border-color: #71492c
+}
+
+.btn-success:hover{
+  background-color:#936341;
+  border-color: #71492c
 }
