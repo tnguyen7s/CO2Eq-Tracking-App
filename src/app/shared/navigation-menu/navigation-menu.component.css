@@ -49,6 +49,7 @@ a.submenu-indicator-minus ~ ul.submenu {
   width: 80px;
   height: 80px;
   border-radius: 50%;
+  margin-bottom: 6px;
 }
 
 .jquery-accordion-menu, .jquery-accordion-menu * {
