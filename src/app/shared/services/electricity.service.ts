@@ -124,8 +124,43 @@ export class ElectricityService{
 
     return <APIElectricityModel>responseData; // either return {} or APIElectricityModel
   }
-  // DELETE
 
+  // READ MONTHLY DATA
+  public async readMonthlyElectricityDataFromDb(month: number): Promise<APIElectricityModel[]>{
+    let responseData = [];
+
+    await fetch(BACKEND_URL+`bulk/${month}`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Token ${this.authService.getToken()}`,
+      }
+    })
+    .then((response)=>{
+      console.log(response);
+
+      if (!response.ok){
+        throw Error(response.statusText);
+      }
+
+      return response.json();
+    })
+    .then((data)=>{
+      responseData = data;
+
+      // save data fetched from the database to cache
+      (<APIElectricityModel[]>data).forEach(e=>{
+        this.cache[e.date] = new Electricity(e.value, e.units, e.date, e.kg_co2eq, e.id)
+      })
+    })
+    .catch((error)=>{
+      console.log('Error', error);
+    })
+
+    return <APIElectricityModel[]>responseData;
+  }
+
+
+  // DELETE
   private async deleteElectricityFromDb(date: string){
     await fetch(BACKEND_URL+date, {
       method: "DELETE",

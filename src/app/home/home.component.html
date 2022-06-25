@@ -1,4 +1,27 @@
 <div class="row">
+  <div class="col-md-10 mx-auto dashboard-container page-space-top">
+    <div class="time">
+      <span style="color: gray; font-size: 16px;">{{today}}</span>
+      <p style="font-size: 22px;">{{timeOfDay}}</p>
+    </div>
+
+    <app-eco2-tracker-bulletchart></app-eco2-tracker-bulletchart>
+
+    <form (ngSubmit)="onSetMyLimit(setLimitForm)" #setLimitForm="ngForm" *ngIf="isSettingLimit">
+      <div class="form-group">
+        <label for="limit">Please set a limit that you would like to not exceed in this month 🎯</label>
+        <input type="number" class="form-control" id="limit" name="limit" min="1" placeholder="Kilogram of CO2 Equivalent" ngModel required>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!setLimitForm.valid">Set my limit</button>
+    </form>
+    <button type="button" class="btn btn-success" (click)="onResetMyLimit()" *ngIf="!isSettingLimit">Reset my limit</button>
+
+  </div>
+</div>
+
+<button class="btn btn-success" (click)="onSeeCache()" style="margin-top: 500px;">See my updated cache</button>
+<div class="row">
   <div class="col-md-12">
     <h1>ELECTRICITY</h1>
     <ul class="list-group">

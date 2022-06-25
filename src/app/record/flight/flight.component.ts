@@ -322,4 +322,19 @@ export class FlightComponent implements OnInit {
 
     return true;
   }
+
+  // delete flights for the date
+  async onDeleteFlights()
+  {
+    this.isCalculatingEco2 = true;
+
+    console.log(this.datePickerForm.get("dateCtrl").value)
+    await this.flightService.removeFlightsOnDate(this.datePickerForm.get("dateCtrl").value);
+    this.isCalculatingEco2 = false;
+    this.showTotal = true;
+
+    this.resetFlightForm();
+    this.datePickerForm.reset();
+    alert('Your flight CO2 equivalent record has been deleted!')
+  }
 }

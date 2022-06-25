@@ -131,4 +131,17 @@ export class OtherTransportsComponent implements OnInit {
     })
   }
 
+  async onDeleteTransportRecord()
+  {
+    const date = this.dateForm.get("dateCtrl").value
+    // delete the transport record, if it is already in the db
+    await this.transportService.removeTransportByDate(date);
+
+    // reset the form
+    this.dateForm.reset();
+    this.setTransportForm();
+
+    alert('You transport CO2 equivalent record has been deleted!')
+  }
+
 }

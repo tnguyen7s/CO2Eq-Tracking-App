@@ -252,6 +252,7 @@
                   >
                     {{isCreateMode? "Submit": "Update"}}
                   </button>
+                  <button type="button" class="btn btn-danger ml-2" (click)="onDeleteFlights()" *ngIf="!isCreateMode">Delete</button>
                   </div>
 
                 </form>

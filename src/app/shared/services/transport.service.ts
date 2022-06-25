@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from '../../../environments/environment.prod';
 import { AuthService } from "src/app/auth/auth.service";
 
-const BACKEND_URL = environment.APP_BACK_END_BASE_URL + "/record/transport/";
+const BACKEND_URL = environment.APP_BACK_END_BASE_URL+"/record/transport/";
 export interface APITransportModel{
   'id'?: number,
   'date': string,
@@ -133,6 +133,39 @@ export class TransportService{
 
     return <APITransportModel>responseData; // either return {} or APIElectricityModel
   }
+
+
+  // READ MONTHLY DATA
+  public async readMonthlyTransportDataFromDb(month: number): Promise<APITransportModel[]>
+  {
+    let responseData = [];
+
+    await fetch(BACKEND_URL+`bulk/${month}`,
+    {
+      method: 'GET',
+      headers: {
+        "Authorization": `Token ${this.authService.getToken()}`,
+      }
+    })
+    .then((response)=>{
+      console.log('response', response)
+      if (!response.ok) throw Error(response.statusText);
+      return response.json()
+    })
+    .then((data)=>{
+      responseData = data;
+
+      (<APITransportModel[]>data).forEach((t)=>{
+        this.cache[t.date] = new Transport(t.date, t.distance, t.distance_unit, t.fuel_efficiency, t.fuel_eff_unit, t.fuel_type, t.kg_co2eq, t.id);
+      })
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+
+    return <APITransportModel[]>responseData;
+  }
+
   // DELETE
 
   private async deleteTransportFromDb(date: string){

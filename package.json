@@ -27,6 +27,7 @@
     "bootstrap": "^4.6.1",
     "express": "^4.18.1",
     "highcharts-angular": "^3.0.0",
+    "highcharts-solid-gauge": "^0.1.7",
     "ngx-sharebuttons": "^10.0.0",
     "rxjs": "~7.5.0",
     "schematics-scss-migrate": "^1.3.14",

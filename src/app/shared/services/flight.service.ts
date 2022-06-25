@@ -134,6 +134,44 @@ export class FlightService{
     return <APIFlightModel[]>responseData;
   }
 
+  // READ MONTHLY DATA
+  public async readMonthlyFlightDataFromDb(month: number): Promise<APIFlightModel[]>
+  {
+    let responseData: any = [];
+
+    await fetch(BACKEND_URL+`bulk/${month}`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Token ${this.authService.getToken()}`
+      }
+    })
+    .then((response)=>{
+      if (!response.ok){
+        throw Error(response.statusText);
+      }
+
+      return response.json();
+    })
+    .then(data=>{
+      responseData = data;
+
+      // cache the data read
+      const cacheData = {};
+      (<APIFlightModel[]>data).forEach(f=>{
+        if (!cacheData[f.date]) cacheData[f.date] = [];
+        cacheData[f.date].push(new Flight(f.date, f.source_iata, f.destination_iata, f.cabin_class, f.kg_co2eq, f.source_name, f.destination_name, f.id));
+      });
+      Object.keys(cacheData).forEach(date=>{
+        if (!this.cache[date]) this.cache[date] = cacheData[date];
+      });
+    })
+    .catch((error)=>{
+      console.log(error);
+    });
+
+    return <APIFlightModel[]>responseData;
+  }
+
   // DELETE
   private async deleteFlightsFromDb(date: string){
     await fetch(BACKEND_URL+date, {

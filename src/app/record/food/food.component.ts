@@ -12,6 +12,7 @@ import { FoodService } from 'src/app/shared/services/food.service';
   styleUrls: ['./food.component.css']
 })
 export class FoodComponent implements OnInit {
+  public showDelete = false;
   public dateForm: FormGroup;
 
   // to determine which tab to be shown
@@ -94,10 +95,13 @@ export class FoodComponent implements OnInit {
       dinnerFoodNameList.forEach((f)=> this.dinnerFoodList.push(Foods.FOOD_PRODUCTS_BY_NAME[f]));
 
       this.foodService.setPlate.next(true);
+
+      this.showDelete = true;
     }
     else
     {
       this.foodService.resetPlate.next(true);
+      this.showDelete = false;
     }
   }
 
@@ -188,6 +192,23 @@ export class FoodComponent implements OnInit {
     this.dateForm.reset();
 
     this.showEc02ResultBox = true;
+
+    this.foodService.resetPlate.next(true);
+  }
+
+  // delete food record of the date
+  async onDeleteMealRecords()
+  {
+    this.dateSelected = this.dateForm.get("date").value;
+    await this.foodService.removeMealsByDate(this.dateSelected);
+
+    this.breakfastFoodList.splice(0, this.breakfastFoodList.length);
+    this.lunchFoodList.splice(0, this.lunchFoodList.length);
+    this.dinnerFoodList.splice(0, this.dinnerFoodList.length);
+
+    this.showDelete = true;
+
+    this.dateForm.reset();
 
     this.foodService.resetPlate.next(true);
   }

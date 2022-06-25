@@ -8,11 +8,14 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./navigation-menu.component.css']
 })
 export class NavigationMenuComponent implements OnInit {
-  isExpanding = false;
+  public isExpanding = false;
+  public image: string = null;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    // load account image
+    this.image = localStorage.getItem("image");
   }
 
   onExpandRecordEmissionMenu(){

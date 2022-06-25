@@ -5,7 +5,8 @@
       <!--ACCOUNT-->
       <li routerLinkActive="active"><a style="cursor: pointer;" routerLink="/account">
         <div class="pictitle avatar">
-          <i class="fa fa-account"></i>
+          <i class="fa fa-account" *ngIf="!image"></i>
+          <img [src]="image" alt="The user avatar" *ngIf="image" id="account-image">
         Account
         </div>
       </a></li>

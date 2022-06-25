@@ -45,6 +45,12 @@ a.submenu-indicator-minus ~ ul.submenu {
   background: #fff;
 }
 
+#account-image{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
 .jquery-accordion-menu, .jquery-accordion-menu * {
   font-family: "Open Sans", sans-serif;
   box-sizing: border-box;

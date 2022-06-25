@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment.prod';
 import { AuthService } from "src/app/auth/auth.service";
 import { HttpClient } from "@angular/common/http";
 
-const BACKEND_URL = environment.APP_BACK_END_BASE_URL + "/record/meals/";
+const BACKEND_URL = environment.APP_BACK_END_BASE_URL+"/record/meals/";
 
 export interface APIMealModel{
   'id'?: number,
@@ -53,15 +53,14 @@ export class FoodService{
   }
 
   //READ ALL
-  getCache(): {[date: string]: {
-    [meal:string]: Meal
-  }}
+  async getCache(): Promise<{ [date: string]: { [meal: string]: Meal; }; }>
   {
     const cacheCopy = {};
 
-    Object.keys(this.cache).forEach(date=>{
-      cacheCopy[date] = this.getMealsByDate(date);
-    })
+    for (let date of Object.keys(this.cache))
+    {
+      cacheCopy[date] = await this.getMealsByDate(date);
+    }
 
     return cacheCopy;
   }
@@ -145,6 +144,42 @@ export class FoodService{
     });
 
     return <APIMealModel[]>responseData;
+  }
+
+  // READ MONTHLY DATA
+  public async readMonthlyMealDataFromDb(month: number): Promise<APIMealModel[]>{
+    let responseData  = [];
+
+    await fetch(BACKEND_URL+`bulk/${month}`,
+    {
+      method: "GET",
+      headers: {
+        "Authorization": `Token ${this.authService.getToken()}`
+      }
+    })
+    .then((response)=>{
+      if (!response.ok) throw Error(response.statusText);
+
+      return response.json();
+    })
+    .then((data)=>{
+      responseData = data;
+
+       // cache the data read
+       const cacheData = {};
+       (<APIMealModel[]>data).forEach(m=>{
+         if (!cacheData[m.date]) cacheData[m.date] = []
+         cacheData[m.date].push(new Meal(JSON.parse(m.food_products), m.kg_co2eq, m.date, m.meal, m.id));
+       });
+       Object.keys(cacheData).forEach(date=>{
+         if (!this.cache[date]) this.cache[date] = cacheData[date];
+       });
+    })
+    .catch((error)=> {
+      console.log(error);
+    })
+
+    return responseData;
   }
 
   // DELETE

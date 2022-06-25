@@ -62,6 +62,8 @@ export class FuelService{
   // CREATE (MANY)
   createFuelsByDate(fuels: Fuel[])
   {
+    if (fuels.length==0) return;
+    
     this.saveFuelsToDb(fuels).subscribe(
       (resData) => {
         console.log(resData);
@@ -131,6 +133,42 @@ export class FuelService{
     .catch((error) => {
       console.log(error);
     });
+
+    return <APIFuelModel[]>responseData;
+  }
+
+  // READ MONTHLY DATA
+  public async readMonthlyFuelDataFromDb(month: number): Promise<APIFuelModel[]>
+  {
+    let responseData = [];
+
+    await fetch(BACKEND_URL+`bulk/${month}`,
+    {
+      method: 'GET',
+      headers: {
+        "Authorization": `Token ${this.authService.getToken()}`
+      }
+    })
+    .then((response)=>{
+      if (!response.ok) throw Error(response.statusText);
+      return response.json()
+    })
+    .then((data)=>{
+      responseData = data;
+
+       // cache the data read
+       const cacheData = {};
+       (<APIFuelModel[]>data).forEach(f=>{
+         if (!cacheData[f.date]) cacheData[f.date] = []
+         cacheData[f.date].push(new Fuel(f.type, f.value, f.units, f.date, f.kg_co2eq, f.id));
+       });
+       Object.keys(cacheData).forEach(date=>{
+         if (!this.cache[date]) this.cache[date] = cacheData[date];
+       });
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
 
     return <APIFuelModel[]>responseData;
   }

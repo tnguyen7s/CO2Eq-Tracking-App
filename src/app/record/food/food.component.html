@@ -135,6 +135,7 @@
       <!--SUBMIT BUTTON-->
       <div class="text-right mt-2">
         <button class="btn btn-success mt-2" type="submit" [disabled]="!dateForm.valid">Submit</button>
+        <button class="btn btn-danger ml-2 mt-2" type="button" (click)="onDeleteMealRecords()" *ngIf="showDelete">Delete</button>
       </div>
   </form>
 </div>

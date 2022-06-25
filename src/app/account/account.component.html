@@ -1,1 +1,97 @@
-<p>account works!</p>
+<div class="row page-space-top">
+  <div class="col-md-10 mx-auto">
+
+    <h4>About you</h4>
+    <hr>
+
+    <app-loading-spinner *ngIf="!name"></app-loading-spinner>
+
+    <h5>Name</h5>
+    <div class="info-block">
+      <input *ngIf="this.name!=null" [(ngModel)]="name" [disabled]="this.fieldEdited!='name'">
+      <p class="prompt" *ngIf="!name">Add your name.</p>
+      <button type="button" (click)="onChangeMode('name')" [ngStyle]="this.fieldEdited!='name'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='name'? 'Save':'Edit'}}</button>
+    </div>
+    <hr>
+
+    <h5>Photo</h5>
+    <img id="account-img" *ngIf="image" alt="" [src]="image">
+    <div class="info-block">
+      <p class="prompt" *ngIf="!image&&this.fieldEdited!='photo'">Add your photo.</p>
+      <input type="file" name="photo" [disabled]="this.fieldEdited!='photo'" (change)="onChangeImageInput($event)" *ngIf="this.fieldEdited=='photo'">
+      <button type="button" (click)="onChangeMode('photo')" [ngStyle]="this.fieldEdited!='photo'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='photo'? 'Save':'Edit'}}</button>
+    </div>
+    <hr>
+
+    <h5>Email</h5>
+    <div><span>Required. Empty string will not be saved.</span></div>
+    <div class="info-block"><span>Control whether to receive email from us.</span>
+      <app-toggle-switch></app-toggle-switch>
+    </div>
+    <div class="info-block">
+      <input *ngIf="this.email!=null" [(ngModel)]="email" [disabled]="this.fieldEdited!='email'" type="email" >
+      <button type="button" (click)="onChangeMode('email')" [ngStyle]="this.fieldEdited!='email'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='email'? 'Save':'Edit'}}</button>
+    </div>
+    <hr>
+
+    <h5>Username</h5>
+    <div><span>Required. Empty string will not be saved.</span></div>
+    <div class="info-block">
+      <input *ngIf="this.username!=null" [(ngModel)]="username" [disabled]="this.fieldEdited!='username'">
+      <button type="button" (click)="onChangeMode('username')" [ngStyle]="this.fieldEdited!='username'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='username'? 'Save':'Edit'}}</button>
+    </div>
+    <hr>
+
+    <h5>Personal info</h5>
+    <span>This section is optional, but we would really appreciate if you can provide them.
+      Your personal information will be used for data analytics in the future. Your identity will be kept confidentially and only aggregated data is used.
+    </span>
+    <hr>
+
+    <div class="col-md-11">
+      <h6>Birthdate</h6>
+      <div class="info-block">
+        <p *ngIf="birthdate && this.fieldEdited != 'birthdate'">{{birthdate}}</p>
+        <input type="date" *ngIf="this.fieldEdited == 'birthdate'" #birthdateRef>
+        <p class="prompt" *ngIf="!birthdate">Add your birthdate.</p>
+        <button type="button" (click)="onChangeMode('birthdate')" [ngStyle]="this.fieldEdited!='birthdate'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='birthdate'? 'Save':'Edit'}}</button>
+      </div>
+      <hr>
+
+      <h6>Gender</h6>
+      <div><span>Only allow one character: for example, F for female.</span></div>
+      <div class="info-block">
+          <input *ngIf="this.gender!=null" [(ngModel)]="gender" [disabled]="this.fieldEdited!='gender'" minlength="1">
+          <p class="prompt" *ngIf="this.gender==null">Add your gender.</p>
+          <button type="button" (click)="onChangeMode('gender')" [ngStyle]="this.fieldEdited!='gender'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='gender'? 'Save':'Edit'}}</button>
+      </div>
+      <hr>
+
+      <h6>Country</h6>
+      <div class="info-block">
+        <input *ngIf="this.country!=null" [(ngModel)]="country" [disabled]="this.fieldEdited!='country'">
+        <p class="prompt" *ngIf="this.country==null">Add your country.</p>
+        <button type="button" (click)="onChangeMode('country')" [ngStyle]="this.fieldEdited!='country'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='country'? 'Save':'Edit'}}</button>
+      </div>
+      <hr>
+
+      <h6>City</h6>
+      <div class="info-block">
+        <input  *ngIf="this.city!=null" [(ngModel)]="city" [disabled]="this.fieldEdited!='city'">
+        <p class="prompt" *ngIf="this.city==null">Add your city.</p>
+        <button type="button" (click)="onChangeMode('city')" [ngStyle]="this.fieldEdited!='city'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='city'? 'Save':'Edit'}}</button>
+      </div>
+      <hr>
+
+      <h6>Region</h6>
+      <div class="info-block">
+        <input *ngIf="this.region!=null" [(ngModel)]="region" [disabled]="this.fieldEdited!='region'">
+        <p class="prompt" *ngIf="this.region==null">Add your region.</p>
+        <button type="button" (click)="onChangeMode('region')" [ngStyle]="this.fieldEdited!='region'? {'border-color': '#b3b3b1', 'color': '#b3b3b1'}: {'border-color': '#09ab4c', 'color': '#09ab4c'}">{{this.fieldEdited=='region'? 'Save':'Edit'}}</button>
+      </div>
+
+
+  </div>
+</div>
+
+

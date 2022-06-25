@@ -10,7 +10,7 @@ import { AccountComponent } from './account/account.component';
 import { HomeComponent } from './home/home.component';
 import { PracticeComponent } from './practice/practice.component';
 import { LearnComponent } from './learn/learn.component';
-import { StatisticsComponent } from './statistics/statistics.component';
+import { StatisticsComponent } from './shared/statistics/statistics.component';
 import { CommunityComponent } from './community/community.component';
 import { FlightComponent } from './record/flight/flight.component';
 import { OtherTransportsComponent } from './record/other-transports/other-transports.component';
@@ -32,6 +32,8 @@ import { FacebookShareComponent } from './shared/social-sharing-buttons/facebook
 import { LinkedInShareComponent } from './shared/social-sharing-buttons/linked-in-share/linked-in-share.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { Eco2TrackerBulletchartComponent } from './home/eco2-tracker-bulletchart/eco2-tracker-bulletchart.component';
+import { ToggleSwitchComponent } from './shared/toggle-switch/toggle-switch.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
     ConvertPipe,
     FacebookShareComponent,
     LinkedInShareComponent,
+    Eco2TrackerBulletchartComponent,
+    ToggleSwitchComponent,
   ],
   imports: [
     BrowserModule,

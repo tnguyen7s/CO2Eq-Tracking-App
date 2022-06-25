@@ -13,6 +13,8 @@ import { ThirdPartyAPIService } from 'src/app/shared/services/third-party-api.se
   styleUrls: ['./electricity.component.css']
 })
 export class ElectricityComponent implements OnInit{
+  showDeleteElectricity = false;
+
   // date selected
   dateSelected: string;
 
@@ -135,6 +137,7 @@ export class ElectricityComponent implements OnInit{
         'dateCtrl': electricity.date
       });
       this.eSubmitButton = "Update";
+      this.showDeleteElectricity = true;
     }
     else
     {
@@ -207,6 +210,10 @@ export class ElectricityComponent implements OnInit{
                     }
           );
 
+    this.completeElectricityForm = true;
+    this.isCalculatingE = false;
+    this.showDeleteElectricity = false;
+
     this.electricityForm.reset();
     this.datePickerForm.reset();
   }
@@ -262,6 +269,19 @@ export class ElectricityComponent implements OnInit{
   getFuelGroups()
   {
     return <FormArray>this.fuelsForm.get('fuelsArray');
+  }
+
+  async onDeleteElectricity(){
+    this.isCalculatingE = true;
+
+    await this.electricityService.removeElectricityByDate(this.dateSelected);
+
+    this.isCalculatingE = false;
+    this.showDeleteElectricity = false;
+    this.electricityForm.reset();
+    this.datePickerForm.reset();
+
+    alert('Your data has been deleted!')
   }
 
 }

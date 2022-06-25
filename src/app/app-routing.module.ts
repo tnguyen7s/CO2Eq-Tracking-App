@@ -13,7 +13,7 @@ import { FoodComponent } from "./record/food/food.component";
 import { OtherTransportsComponent } from "./record/other-transports/other-transports.component";
 import { ProductsComponent } from "./record/products/products.component";
 import { RecordComponent } from "./record/record.component";
-import { StatisticsComponent } from "./statistics/statistics.component";
+import { StatisticsComponent } from "./shared/statistics/statistics.component";
 
 const appRoutes: Routes = [
   {path: "", redirectTo: "/home", pathMatch: "full"},
