@@ -11,8 +11,19 @@ class="pt-5"
 </share-buttons> -->
 
 <!--Card made by Lyon Etyo: https://codepen.io/lyon-etyo/pen/OJmyMGd-->
-<div class="row" >
-  <div class="col-md-8 mx-auto" *ngFor="let blog of blogs">
+<div class="row container" >
+  <div class="col-md-4">
+    <form class="form-inline" style="padding-left: 30vw;" #filterForm="ngForm">
+      <div class="form-group">
+        <label for="filter" class="">Filter</label>
+        <input type="search" name="filter" id="filter" class="form-control ml-2" ngModel>
+        <button type="button" class="btn btn-success ml-2" style="padding: 4px;" (click)="onFilterTopic(filterForm)">Search</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-10" *ngFor="let blog of blogsToDisplay">
+
     <div class="card-container">
       <div class="card">
         <div class="card__header">
@@ -21,8 +32,7 @@ class="pt-5"
           </div>
         </div>
         <div class="card__body">
-          <a>{{blog.title}}</a>
-          <p>{{blog.summary}}</p>
+          <p>{{blog.title}} <a [href]="blog.linkToArticle" target="_blank">[Visit the article]</a></p>
         </div>
         <div class="card__footer">
           <div class="user">

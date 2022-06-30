@@ -4,15 +4,15 @@ export class Blog
               public title: string,
               public tag: string,
               public thumbnailUrl: string,
-              public summary: string,
-              public dateWritten: string)
+              public dateWritten: string,
+              public linkToArticle: string)
               {
 
                 this.blogId = blogId,
                 this.title = title;
                 this.tag = tag;
                 this.thumbnailUrl = thumbnailUrl;
-                this.summary = summary,
                 this.dateWritten = dateWritten
+                this.linkToArticle = linkToArticle;
               }
 }
