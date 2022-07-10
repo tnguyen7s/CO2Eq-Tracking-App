@@ -19,6 +19,7 @@ export class AccountComponent implements OnInit, OnDestroy{
   public city = null;
   public region = null;
   public image = null;
+  public storageKey = "eco2app-avatar"
 
   // subscription
   private sub: Subscription;
@@ -47,7 +48,7 @@ export class AccountComponent implements OnInit, OnDestroy{
     });
 
     // load the image if any
-    this.image = localStorage.getItem('image');
+    this.image = localStorage.getItem(this.storageKey);
   }
 
   onChangeMode(field: string){
@@ -117,9 +118,9 @@ export class AccountComponent implements OnInit, OnDestroy{
                   this.region)
     );
     // save img to local storage
-    localStorage.removeItem('image');
+    localStorage.removeItem(this.storageKey);
     console.log(this.image)
-    localStorage.setItem('image', this.image)
+    localStorage.setItem(this.storageKey, this.image)
 
     // unsubscribe the subscription
     this.sub.unsubscribe();

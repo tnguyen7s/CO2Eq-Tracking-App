@@ -14,12 +14,13 @@ export class NavigationMenuComponent implements OnInit {
   public image: string = null;
   public nameCalled: string;
   private sub: Subscription;
+  private keyStorage = "eco2app-avatar"
 
   constructor(private authService: AuthService, private router: Router, private accountService: AccountService) { }
 
   ngOnInit(): void {
     // load account image
-    this.image = localStorage.getItem("image");
+    this.image = localStorage.getItem(this.keyStorage);
     this.sub = this.accountService.userAccount.subscribe((value)=>{
       const name = value.first_name+" " +value.last_name;
       this.nameCalled = value.first_name || value.last_name? name:value.username;
