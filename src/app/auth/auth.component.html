@@ -1,4 +1,5 @@
-<div class="row">
+<div class="row container">
+  <img id="app-logo" src="../../assets/final.png" alt="app's logo" *ngIf="!isLoading && authMode == 'Sign In'">
   <div class="col-md-4">
     <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
     <div class="alert alert-danger" *ngIf="errorMsg">{{errorMsg}}</div>
