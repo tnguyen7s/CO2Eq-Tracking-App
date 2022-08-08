@@ -5,7 +5,7 @@ import Exporting from 'highcharts/modules/exporting';
 import ExportData from 'highcharts/modules/export-data';
 import Accessibility from 'highcharts/modules/accessibility';
 import { Subscription } from 'rxjs';
-import { StatisticsService } from 'src/app/shared/statistics/statistics.service';
+import { StatisticsService } from 'src/app/statistics/statistics.service';
 
 //https://www.highcharts.com/docs/chart-and-series-types/bullet-chart
 BulletChart(Highcharts);

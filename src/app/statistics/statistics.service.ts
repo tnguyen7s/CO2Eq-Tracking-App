@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
-import { ElectricityService } from "../services/electricity.service";
-import { FlightService } from "../services/flight.service";
-import { FoodService } from "../services/food.service";
-import { FuelService } from "../services/fuel.service";
-import { TransportService } from "../services/transport.service";
+import { ElectricityService } from "../shared/services/electricity.service";
+import { FlightService } from "../shared/services/flight.service";
+import { FoodService } from "../shared/services/food.service";
+import { FuelService } from "../shared/services/fuel.service";
+import { TransportService } from "../shared/services/transport.service";
 
 @Injectable({
   providedIn: "root"

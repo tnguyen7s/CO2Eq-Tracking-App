@@ -10,7 +10,7 @@ import { FlightService } from '../shared/services/flight.service';
 import { FoodService } from '../shared/services/food.service';
 import { FuelService } from '../shared/services/fuel.service';
 import { TransportService } from '../shared/services/transport.service';
-import { StatisticsService } from '../shared/statistics/statistics.service';
+import { StatisticsService } from '../statistics/statistics.service';
 
 @Component({
   selector: 'app-home',
