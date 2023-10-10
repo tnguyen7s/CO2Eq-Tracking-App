@@ -11,6 +11,7 @@ import { CommunityModule } from './community/community.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
     AccountModule,
     LearnModule,
     CommunityModule,
-    StatisticsModule
+    StatisticsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

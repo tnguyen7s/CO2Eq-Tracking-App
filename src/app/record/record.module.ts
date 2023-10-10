@@ -13,6 +13,10 @@ import { Eco2FlightChartComponent } from "./flight/eco2-flight-chart/eco2-flight
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SharedModule } from "../shared/shared.module";
 import { RecordRoutingModule } from "./record-routing.module";
+import {MatDatepickerModule} from "@angular/material/datepicker"
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatNativeDateModule } from "@angular/material/core";
+import {MatInputModule} from "@angular/material/input"
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { RecordRoutingModule } from "./record-routing.module";
   imports: [
     DragDropModule,
     SharedModule,
-    RecordRoutingModule
+    RecordRoutingModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatInputModule
   ],
   exports: [
     FlightComponent,

@@ -144,5 +144,6 @@ export class AccountComponent implements OnInit, OnDestroy{
     reader.onload = (_event) => {
       this.image = reader.result;
     }
+
   }
 }
